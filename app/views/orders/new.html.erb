@@ -1,0 +1,46 @@
+<h1>オーダー入力</h1>
+
+<!--%= render 'form' %>
+<--!>
+<%= form_tag :action => :create do %>
+	<li>
+		媒体名 <%= text_field "order", :media %>
+	</li>
+	<li>
+		発売日
+		<%= date_select(
+		:release_date,
+		use_month_numbers: true, # jan, febとかじゃなくて数字で月を表現
+		start_year: (Time.now.year), # 何年から表示させるか
+		end_year: (Time.now.year), # 何年まで表示させるか
+		default:(Time.now.year),
+
+		#default: Date.new(2015, 1, 1), # 最初に表示されている年月日
+		date_separator: '%s') # 年月日を仕切る文字
+		%>
+	</li>
+	<li>
+		広告主 <%= text_field "order", :client %>
+	</li>
+	<li>
+		広告会社 <%= text_field "order", :agent %>
+	</li>
+	<li>
+		スペース <%= text_field "order", :space %>
+	</li>
+	<li>
+		料金 <%= text_field "order", :price %>
+	</li>
+	<li>
+		レート <%= select :rate, :count, {"1回"=>1, "3回"=>3} %>
+	</li>
+	<li>
+		請求先 <%= text_field "order", :account %>
+	</li>
+	<li>
+		掲載誌送付先 <%= text_field "order", :sample %>
+	</li>
+	<%= submit_tag '申し込む' %>
+<% end %>
+
+<%= link_to '戻る', orders_path %>
