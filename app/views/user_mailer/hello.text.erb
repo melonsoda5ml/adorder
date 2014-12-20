@@ -1,3 +1,18 @@
-UserMailer#hello
+※本メールは、広告オーダーシステムから自動送信しています。
 
-<%= @order.media %>
+
+ご担当者様
+
+お疲れ様です。下記の通り、申込みをさせていただきます。
+
+担当者:<%= @order.id %>
+媒体名:<%= @order.media %>
+掲載号:<%= @order.release_date %>
+広告主:<%= @order.client %>
+広告会社:<%= @order.agent %>
+料金:<%= @order.price %>
+レート:<%= @order.rate %>
+請求書送付先:<%= @order.account %>
+見本誌送付先:<%= @order.sample %>
+
+以上、よろしくお願い致します。

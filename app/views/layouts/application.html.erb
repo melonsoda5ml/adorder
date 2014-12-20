@@ -9,7 +9,7 @@
 <body>
 
 <% if user_signed_in? %>
-	<strong><%= current_user.email %></strong>
+	<strong><%= current_user.name %></strong>としてログイン中
 	<%= link_to 'オーダー一覧', orders_path, :class => 'navbar-link' %> |
 	<%= link_to '新規オーダー', new_order_path, :class => 'navbar-link' %> |
 	<%= link_to 'プロフィール編集', edit_user_registration_path, :class => 'navbar-link' %> |

@@ -25,6 +25,8 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+		@user.name = user_params[:name]
+		p @user.name
     @user.save
     respond_with(@user)
   end
