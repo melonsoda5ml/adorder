@@ -28,7 +28,8 @@ class OrdersController < ApplicationController
 #    @order = Order.new(order_params)
     @order.save
 		redirect_to action:'index'
-#    respond_with(@order)
+		@mail = UserMailer.hello(@order.media).deliver
+    #respond_with(@order)
   end
 
   def update
