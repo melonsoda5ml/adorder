@@ -40,22 +40,17 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
+=begin
 	config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 	config.action_mailer.delivery_method = :smtp
 	config.action_mailer.smtp_settings = {
-=begin
 		:address => 'smtp.gmail.com',
 		:port => 587,
 		:domain => 'nikkeibp.co.jp',
 		:user_name => '328miyuki',
 		:password => 'tsunechan55!',
-=end
-		:address => 'smtp.office365.com',
-		:port => 25,
-		:domain => 'nikkeibp.co.jp',
-		:user_name => 'mozawa',
-		:password => 'Kirei333',
 		:authentication => :ntlm,
 		:enable_starttls_auto => true
 	}
+=end
 end

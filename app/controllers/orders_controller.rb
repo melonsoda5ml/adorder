@@ -1,3 +1,6 @@
+require 'viewpoint'
+include Viewpoint::EWS
+
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
 
@@ -52,7 +55,17 @@ class OrdersController < ApplicationController
 			@order.sample = order_params[:sample]
 			@order.user_id = current_user.id
 			@order.save
-			UserMailer.sendmail(@order).deliver
+			#UserMailer.sendmail(@order).deliver
+
+			endpoint = 'https://outlook.office365.com/ews/Exchange.asmx'
+			user = 'mozawa@nikkeibp.co.jp'
+			pass = 'Kirei333'
+			cli = Viewpoint::EWSClient.new endpoint, user, pass
+			cli.send_message do |m|
+				m.subject = "【申込み】"+@order.media
+				m.body    = "申込です！！！！！"
+				m.to_recipients << 'mozawa@nikkeibp.co.jp'
+			end
     end
 
     def order_params
