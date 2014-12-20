@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'viewpoint'
+
 gem 'devise'
 gem 'exchanger'
 

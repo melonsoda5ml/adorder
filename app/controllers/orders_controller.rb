@@ -23,7 +23,6 @@ class OrdersController < ApplicationController
   def create
 		set_order(order_params)
 		redirect_to action:'index'
-#		@mail = UserMailer.hello(@order.media).deliver
     #respond_with(@order)
   end
 
@@ -53,7 +52,7 @@ class OrdersController < ApplicationController
 			@order.sample = order_params[:sample]
 			@order.user_id = current_user.id
 			@order.save
-			UserMailer.hello(@order).deliver
+			UserMailer.sendmail(@order).deliver
     end
 
     def order_params

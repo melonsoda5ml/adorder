@@ -17,7 +17,8 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
 
   # Print deprecation notices to the Rails logger.
-  config.active_support.deprecation = :log
+  config.active_support.deprecation = :notify
+  #config.active_support.deprecation = :log
 
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
@@ -42,12 +43,19 @@ Rails.application.configure do
 	config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 	config.action_mailer.delivery_method = :smtp
 	config.action_mailer.smtp_settings = {
+=begin
 		:address => 'smtp.gmail.com',
 		:port => 587,
-		:domain => 'gmail.com',
+		:domain => 'nikkeibp.co.jp',
 		:user_name => '328miyuki',
 		:password => 'tsunechan55!',
-		:authentication => 'plain',
+=end
+		:address => 'smtp.office365.com',
+		:port => 25,
+		:domain => 'nikkeibp.co.jp',
+		:user_name => 'mozawa',
+		:password => 'Kirei333',
+		:authentication => :ntlm,
 		:enable_starttls_auto => true
 	}
 end

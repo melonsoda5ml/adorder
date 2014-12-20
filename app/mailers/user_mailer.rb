@@ -1,6 +1,6 @@
 class UserMailer < ApplicationMailer
-	default from: "328miyuki@gmail.com"
-	def hello(order)
+	default from: "mozawa@nikkeibp.co.jp"
+	def sendmail(order)
 		@order = order
 		subject = "【申込み】"+@order.media
 		mail(
