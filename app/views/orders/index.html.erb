@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Orders</h1>
+<h1>オーダー一覧</h1>
 
 <table>
   <thead>
@@ -11,15 +11,18 @@
 
   <tbody>
     <% @orders.each do |order| %>
+			<% if order.user_id == current_user.id %>
       <tr>
-        <td><%= link_to 'Show', order %></td>
-        <td><%= link_to 'Edit', edit_order_path(order) %></td>
-        <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+				<td><%= order.media %></td>
+				<td><%= order.release_date %></td>
+        <td><%= link_to '詳細', order %></td>
+        <td><%= link_to '編集', edit_order_path(order) %></td>
+        <td><%= link_to '削除', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
+			<% end %>
     <% end %>
   </tbody>
+
 </table>
 
 <br>
-
-<%= link_to 'New Order', new_order_path %>

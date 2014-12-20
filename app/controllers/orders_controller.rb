@@ -21,14 +21,9 @@ class OrdersController < ApplicationController
   end
 
   def create
-		p "表示"
-		p params[:order][:media]
-		@order = Order.new
-		@order.media = params[:order][:media]
-#    @order = Order.new(order_params)
-    @order.save
+		set_order(order_params)
 		redirect_to action:'index'
-		@mail = UserMailer.hello(@order.media).deliver
+#		@mail = UserMailer.hello(@order.media).deliver
     #respond_with(@order)
   end
 
@@ -43,11 +38,26 @@ class OrdersController < ApplicationController
   end
 
   private
-    def set_order
-      @order = Order.find(params[:id])
+    def set_order(order_params)
+#    @order = Order.find(params[:id])
+			p order_params
+			@order = Order.new
+			@order.media = order_params[:media]
+			@order.release_date = order_params[:release_date]
+			@order.client = order_params[:client]
+			@order.agent = order_params[:agent]
+			@order.space = order_params[:space]
+			@order.price = order_params[:price]
+			@order.rate = order_params[:rate]
+			@order.account = order_params[:account]
+			@order.sample = order_params[:sample]
+			@order.user_id = current_user.id
+			@order.save
+			UserMailer.hello(@order).deliver
     end
 
     def order_params
       params[:order]
     end
+
 end

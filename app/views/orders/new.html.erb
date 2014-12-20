@@ -1,7 +1,5 @@
 <h1>オーダー入力</h1>
 
-<!--%= render 'form' %>
-<--!>
 <%= form_tag :action => :create do %>
 	<li>
 		媒体名 <%= text_field "order", :media %>
@@ -40,7 +38,7 @@
 	<li>
 		掲載誌送付先 <%= text_field "order", :sample %>
 	</li>
-	<%= submit_tag '申し込む' %>
+	<%= submit_tag '申し込む', :user_id => current_user.id %>
 <% end %>
 
 <%= link_to '戻る', orders_path %>
