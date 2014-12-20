@@ -45,6 +45,8 @@ def destroy
 			p order_params
 			@order = Order.new
 			@order.media = order_params[:media]
+			#@release_date = Date.civil(params[:release_date][:"date(1i)"].to_i, params[:release_date][:"date(2i)"].to_i, params[:release_date][:"date(3i)"].to_i)
+			p @release_date
 			@order.release_date = order_params[:release_date]
 			@order.client = order_params[:client]
 			@order.agent = order_params[:agent]
