@@ -2,7 +2,7 @@ require 'viewpoint'
 include Viewpoint::EWS
 
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:show, :edit, :update, :destroy]
+#  before_action :set_order, only: :create
 
   respond_to :html
 
@@ -34,7 +34,7 @@ class OrdersController < ApplicationController
     respond_with(@order)
   end
 
-  def destroy
+def destroy
     @order.destroy
     respond_with(@order)
   end
@@ -63,7 +63,7 @@ class OrdersController < ApplicationController
 			cli = Viewpoint::EWSClient.new endpoint, user, pass
 			cli.send_message do |m|
 				m.subject = "【申込み】"+@order.media
-				m.body    = "申込です！！！！！"
+				m.body    = current_user.name+"から申込みです！！！！！"
 				m.to_recipients << 'mozawa@nikkeibp.co.jp'
 			end
     end

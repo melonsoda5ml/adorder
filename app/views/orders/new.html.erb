@@ -2,7 +2,9 @@
 
 <%= form_tag :action => :create do %>
 	<li>
-		媒体名 <%= text_field "order", :media %>
+		媒体名 <!--%= text_field "order", :media %-->
+		<% magazines = [['NB', '日経ビジネス'], ['NC', '日経エレクトロニクス'], ['NV', '日経トップリーダー']] %>
+		<%= select "order", :media, magazines %>
 	</li>
 	<li>
 		発売日
@@ -18,7 +20,7 @@
 		%>
 	</li>
 	<li>
-		広告主 <%= text_field "order", :client %>
+		広告主  <%= text_field "order", :client %>
 	</li>
 	<li>
 		広告会社 <%= text_field "order", :agent %>
