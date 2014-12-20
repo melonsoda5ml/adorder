@@ -21,6 +21,7 @@ class OrdersController < ApplicationController
   end
 
   def edit
+		@order = Order.find(params[:id])
   end
 
   def create
@@ -30,13 +31,17 @@ class OrdersController < ApplicationController
   end
 
   def update
-    @order.update(order_params)
-    respond_with(@order)
+		@order = Order.find(params[:id])
+    #@order.update(order_params)
+    #respond_with(@order)
   end
 
 def destroy
-    @order.destroy
-    respond_with(@order)
+#    @order.destroy
+		Order.find(params[:id]).destroy
+		flash[:success] = "オーダーを削除しました"
+#    respond_with(@order)
+		redirect_to orders_path
   end
 
   private
