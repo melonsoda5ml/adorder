@@ -10,13 +10,11 @@
 		発売日
 		<%= date_select(
 		:release_date,
-		use_month_numbers: true, # jan, febとかじゃなくて数字で月を表現
-		start_year: (Time.now.year), # 何年から表示させるか
-		end_year: (Time.now.year), # 何年まで表示させるか
+		use_month_numbers: true,
+		start_year: (Time.now.year),
+		end_year: (Time.now.year),
 		default:(Time.now.year),
-
-		#default: Date.new(2015, 1, 1), # 最初に表示されている年月日
-		date_separator: '%s') # 年月日を仕切る文字
+		date_separator: '%s')
 		%>
 	</li>
 	<li>
