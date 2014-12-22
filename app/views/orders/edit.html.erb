@@ -1,6 +1,50 @@
-<h1>Editing Order</h1>
+<h1>オーダー情報を編集</h1>
 
-<%= render 'form' %>
+<%= form_tag :action => :edit do %>
+	<li>
+		状況 <%= select :status, :count, {"決定"=>0, "角度高め"=>1, "提案中"=>2} %>
+	</li>
+	<li>
+		媒体名
+		<% magazines = [['NB', '日経ビジネス'], ['NC', '日経エレクトロニクス'], ['NV', '日経トップリーダー']] %>
+		<%= select "order", :media, magazines %>
+	</li>
+	<li>
+		発売日
+		<%= date_select(
+		:release_date,
+		use_month_numbers: true,
+		start_year: (Time.now.year),
+		end_year: (Time.now.year),
+		default:(Time.now.year),
+		date_separator: '%s')
+		%>
+	</li>
+	<li>
+		広告主  <%= text_field "order", :client %>
+	</li>
+	<li>
+		広告会社 <%= text_field "order", :agent %>
+	</li>
+	<li>
+		スペース <%= text_field "order", :space %>
+	</li>
+	<li>
+		料金 <%= text_field "order", :price %>万円
+	</li>
+	<li>
+		レート <%= select :rate, :count, {"1回"=>1, "3回"=>3} %>
+	</li>
+	<li>
+		請求先 <%= text_field "order", :account %>
+	</li>
+	<li>
+		掲載誌送付先 <%= text_field "order", :sample %>
+	</li>
+	<li>
+		オーダー情報をメールで再送する <%= check_box "mail", "send" %>
+	</li>
+	<%= submit_tag '編集', :user_id => current_user.id %>
+<% end %>
 
-<%= link_to 'Show', @order %> |
-<%= link_to 'Back', orders_path %>
+<%= link_to '戻る', orders_path %>

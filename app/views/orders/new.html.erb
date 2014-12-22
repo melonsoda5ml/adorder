@@ -2,6 +2,9 @@
 
 <%= form_tag :action => :create do %>
 	<li>
+		状況 <%= select :status, :count, {"決定"=>0, "角度高め"=>1, "提案中"=>2} %>
+	</li>
+	<li>
 		媒体名 <!--%= text_field "order", :media %-->
 		<% magazines = [['NB', '日経ビジネス'], ['NC', '日経エレクトロニクス'], ['NV', '日経トップリーダー']] %>
 		<%= select "order", :media, magazines %>
