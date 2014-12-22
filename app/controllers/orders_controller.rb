@@ -26,14 +26,18 @@ class OrdersController < ApplicationController
   def create
 		order = set_order(order_params)
 		#UserMailer.sendmail(@order).deliver
-		sendmail(order)
-		flash[:success] = "オーダーを登録しましました"
+		if params[:mail][:send] == "1"
+			p "メールおくる"
+			sendmail(order)
+		end
+		redirect_to orders_path
+		flash[:success] = "オーダーを登録しました"
   end
 
   def update
 		@order = Order.find(params[:id]).update
     #@order.update(order_params)
-		flash[:success] = "オーダーを登録しましました"
+		flash[:success] = "オーダー情報を編集しました"
   end
 
 	def destroy
@@ -54,9 +58,9 @@ class OrdersController < ApplicationController
 		cli.send_message do |m|
 			m.subject = "【申込み】"+@order.media
 			m.body = t
-			m.to_recipients << 'mozawa@nikkeibp.co.jp'
+			m.to_recipients << 'miyuki328@icloud.com'
+			m.cc_recipients << 'mozawa@nikkeibp.co.jp'
 			end
-			redirect_to orders_path
 	end
 
   private
