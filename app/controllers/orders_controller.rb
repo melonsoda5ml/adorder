@@ -25,10 +25,10 @@ class OrdersController < ApplicationController
 
   def create
 		order = set_order(order_params)
-		#UserMailer.sendmail(@order).deliver
 		if params[:mail][:send] == "1"
 			p "メールおくる"
-			sendmail(order)
+			Mailer.sendmail(@order).deliver
+			#sendmail(order)
 		end
 		redirect_to orders_path
 		flash[:success] = "オーダーを登録しました"
@@ -50,7 +50,7 @@ class OrdersController < ApplicationController
 		@order = order
 		endpoint = 'https://outlook.office365.com/ews/Exchange.asmx'
 		user = 'mozawa@nikkeibp.co.jp'
-		pass = 'Kirei333'
+		pass = 'password'
 		t = render_to_string('sendmail.text.erb', collection: [@order]).to_str
 		cli = Viewpoint::EWSClient.new endpoint, user, pass
 		date_ja =  @order.release_date.strftime("%Y/%m/%d(#{%w(日 月 火 水 木 金 土)[@order.release_date.wday]})")
