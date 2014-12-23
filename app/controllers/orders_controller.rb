@@ -20,13 +20,12 @@ class OrdersController < ApplicationController
   end
 
   def edit
-		o = Order.find(params[:id])
-		p o
+		@order = Order.find(params[:id])
 =begin
-		@order = set_order(o)
+		#order = set_order(@order)
 		if params[:mail][:send] == "1"
 			p "メールおくる"
-			Mailer.sendmail(@order).deliver
+			Mailer.sendmail(order).deliver
 			#sendmail(order)
 		end
 		redirect_to orders_path
@@ -35,11 +34,8 @@ class OrdersController < ApplicationController
   end
 
   def create
-		#order = set_order(order_params)
-		o = Order.new
-		@order = set_order(o)
+		@order = set_order(Order.new)
 		if params[:mail][:send] == "1"
-			p "メールおくる"
 			Mailer.sendmail(@order).deliver
 			#sendmail(order)
 		end
@@ -48,6 +44,13 @@ class OrdersController < ApplicationController
   end
 
   def update
+		@order = set_order(Order.find(params[:id]))
+		if params[:mail][:send] == "1"
+			Mailer.sendmail(@order).deliver
+			#sendmail(order)
+		end
+		redirect_to orders_path
+		flash[:success] = "オーダーを編集しました"
   end
 
 	def destroy

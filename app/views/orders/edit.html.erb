@@ -1,6 +1,7 @@
 <h1>オーダー情報を編集</h1>
 
-<%= form_tag :action => :edit do %>
+<ul class="orders">
+	<%= form_for(@order, :url=>{:action => 'update'}, :html=>{:method =>:put}) do %>
 	<li>
 		状況 <%= select :status, :count, {"決定"=>0, "角度高め"=>1, "提案中"=>2} %>
 	</li>
@@ -46,5 +47,6 @@
 	</li>
 	<%= submit_tag '編集', :user_id => current_user.id %>
 <% end %>
+</ul>
 
 <%= link_to '戻る', orders_path %>
