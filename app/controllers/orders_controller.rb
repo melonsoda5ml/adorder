@@ -12,6 +12,7 @@ class OrdersController < ApplicationController
 
   def show
 		@order = Order.find(params[:id])
+    respond_with(@order)
   end
 
   def new
@@ -21,16 +22,7 @@ class OrdersController < ApplicationController
 
   def edit
 		@order = Order.find(params[:id])
-=begin
-		#order = set_order(@order)
-		if params[:mail][:send] == "1"
-			p "メールおくる"
-			Mailer.sendmail(order).deliver
-			#sendmail(order)
-		end
-		redirect_to orders_path
-		flash[:success] = "オーダー情報を編集しました"
-=end
+    respond_with(@order)
   end
 
   def create
@@ -79,23 +71,14 @@ class OrdersController < ApplicationController
   private
 
     def set_order(order)
-    #def set_order(order_params)
-=begin
-			p "ぱらむす"
-			p order_params
-			if order_params[:id].nil?
-				p "nil!!!!!"
-				@order = Order.new
-			else
-				@order = Order.find(params[:id])
-			end
-=end
-
 			order.media = order_params[:media]
+=begin
 			year = params[:release_date]["{:use_month_numbers=>true, :start_year=>2014, :end_year=>2014, :default=>2014, :date_separator=>\"%s\"}(1i)"].to_i
 			month = params[:release_date]["{:use_month_numbers=>true, :start_year=>2014, :end_year=>2014, :default=>2014, :date_separator=>\"%s\"}(2i)"].to_i
 			date = params[:release_date]["{:use_month_numbers=>true, :start_year=>2014, :end_year=>2014, :default=>2014, :date_separator=>\"%s\"}(3i)"].to_i
 			order.release_date = Date.new year, month, date
+=end
+			order.release_date = order_params[:release_date]
 			order.client = order_params[:client]
 			order.agent = order_params[:agent]
 			order.space = order_params[:space]

@@ -12,14 +12,15 @@
 	</li>
 	<li>
 		発売日
-		<%= date_select(
+		<%= date_field("order", "release_date")%>
+		<!--%= date_select(
 		:release_date,
 		use_month_numbers: true,
 		start_year: (Time.now.year),
 		end_year: (Time.now.year),
 		default:(Time.now.year),
 		date_separator: '%s')
-		%>
+		%-->
 	</li>
 	<li>
 		広告主  <%= text_field "order", :client %>
