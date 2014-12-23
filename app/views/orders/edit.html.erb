@@ -7,8 +7,7 @@
 	</li>
 	<li>
 		媒体名
-		<% magazines = [['NB', '日経ビジネス'], ['NC', '日経エレクトロニクス'], ['NV', '日経トップリーダー']] %>
-		<%= select "order", :media, magazines %>
+		<%= select "order", :media, @csv %>
 	</li>
 	<li>
 		発売日
