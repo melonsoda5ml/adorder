@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'oauth'
+gem 'oauth2'
 gem 'viewpoint'
 
 gem 'devise'
