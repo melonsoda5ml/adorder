@@ -11,9 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141222133658) do
+ActiveRecord::Schema.define(version: 20150315074900) do
 
   create_table "homes", force: true do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "order_menus", force: true do |t|
+    t.string   "media"
+    t.string   "agent"
+    t.string   "space"
+    t.integer  "rate"
+    t.integer  "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -28,10 +38,18 @@ ActiveRecord::Schema.define(version: 20141222133658) do
     t.integer  "rate"
     t.string   "account"
     t.string   "sample"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.integer  "user_id"
     t.integer  "status"
+    t.integer  "margin"
+    t.string   "production"
+    t.boolean  "placement_report"
+    t.boolean  "attribution_report"
+    t.boolean  "download_pdf"
+    t.boolean  "clickcount"
+    t.string   "notes"
+    t.string   "person_in_charge"
   end
 
   create_table "users", force: true do |t|

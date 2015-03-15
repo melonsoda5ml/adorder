@@ -33,6 +33,9 @@
 		料金 <%= text_field "order", :price %>万円
 	</li>
 	<li>
+		マージン <%= text_field "order", :margin %>%
+	</li>
+	<li>
 		レート <%= select :rate, :count, {"1回"=>1, "3回"=>3} %>
 	</li>
 	<li>
@@ -40,6 +43,15 @@
 	</li>
 	<li>
 		掲載誌送付先 <%= text_field "order", :sample %>
+	</li>
+	<li>
+		制作会社 <%= text_field "order", :production %>
+	</li>
+	<li>
+		備考 <%= text_field "order", :notes %>
+	</li>
+	<li>
+		担当者 <%= text_field "order", :person_in_charge %>
 	</li>
 	<li>
 		オーダー情報をメールで送信する <%= check_box "mail", "send" %>

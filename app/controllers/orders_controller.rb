@@ -85,10 +85,17 @@ class OrdersController < ApplicationController
 			order.client = order_params[:client]
 			order.agent = order_params[:agent]
 			order.space = order_params[:space]
+			order.margin = order_params[:margin]
 			order.price = order_params[:price]
 			order.rate =  params[:rate][:count].to_i
 			order.account = order_params[:account]
+			order.production = order_params[:production]
 			order.sample = order_params[:sample]
+			order.placement_report = order_params[:placement_report]
+			order.attribution_report = order_params[:attribution_report]
+			order.download_pdf = order_params[:download_pdf]
+			order.clickcount = order_params[:clickcount]
+			order.notes = order_params[:notes]
 			order.user_id = current_user.id
 			order.status = params[:status][:count].to_i
 			order.save

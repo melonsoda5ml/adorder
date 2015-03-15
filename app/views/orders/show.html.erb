@@ -8,10 +8,13 @@
 <li>金額:<%= @order.price %>万円</li>
 <li>広告主:<%= @order.client %></li>
 <li>広告会社:<%= @order.agent %></li>
+<li>マージン:<%= @order.margin %></li>
 <li>スペース:<%= @order.space %></li>
 <li>レート:<%= @order.rate %></li>
 <li>請求先:<%= @order.account %></li>
 <li>請求書送付先:<%= @order.sample %></li>
+<li>制作会社:<%= @order.production %></li>
+<li>備考:<%= @order.notes %></li>
 <%= link_to '編集', edit_order_path(@order) %> |
 <%= link_to '削除', @order, method: :destroy, data: { confirm: '本当に削除しますか？' } %> |
 <%= link_to '戻る', orders_path %>
