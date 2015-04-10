@@ -17,13 +17,15 @@ class OrdersController < ApplicationController
   end
 
   def new
-		@csv = CSV.read("config/csv_data/media.csv")
+		@mag = CSV.read("config/csv_data/mag.csv")
+		@web = CSV.read("config/csv_data/web.csv")
     @order = Order.new
     respond_with(@order)
   end
 
   def edit
-		@csv = CSV.read("config/csv_data/media.csv")
+		@mag = CSV.read("config/csv_data/mag.csv")
+		@web = CSV.read("config/csv_data/web.csv")
 		@order = Order.find(params[:id])
     respond_with(@order)
   end
