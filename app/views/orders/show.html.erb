@@ -1,7 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <h1>オーダー情報</h1>
-この情報は<%= @order.created_at %>に登録された、<%= @type %>広告のオーダーです。
+<%= @order.created_at.strftime("%Y年%m月%d日") %>に登録された、<%= @type %>広告のオーダーです。
+<br>
 <li>状況:<%= @order.status %><li>
 <li>媒体:<%= @order.media %></li>
 <li>発売日:<%= @order.release_date %></li>
