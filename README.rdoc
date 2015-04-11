@@ -1,25 +1,15 @@
-== リードみー！
+== これはなに 
 
-使い方とか書く予定！
+雑誌やWebの広告申し込みをWebから行うためのフォームです。
+プルダウンベースで必要情報を入力することで、案件管理をすることができます。
 
-* Ruby version
+* なぜやっているのか
+出版業界やインターネット業界の一部では、広告掲載の申し込みをメールベースで行っているところが多くあります。
+詳しくは下記を御覧ください。
+[インターネット広告掲載トラフィックマニュアル](http://www.jiaa.org/archive/traffic_manual.html)
 
-* System dependencies
+この方法は、情報を手打ちで入力することの煩わしさと、情報管理の側面から非効率だと考えています。
+特に、過去の案件情報を検索したい場合、送信メール履歴から検索する必要があります。
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+こうした情報を改善するため、Web画面から申し込みフォームに記入し、保存するだけで必要情報をメールで送れるシステムを作っています。
+メールは、多くの企業で導入されているOffice365をベースにしています。

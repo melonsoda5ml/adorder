@@ -58,7 +58,7 @@ class OrdersController < ApplicationController
 
 	def sendmail(order)
 		@order = order
-		endpoint = 'メールサービスのURL（Office365等）'
+		endpoint = 'https://outlook.office365.com/ews/Exch' #Office365
 		user = 'ユーザー名'
 		pass = 'パスワード'
 		t = render_to_string('sendmail.text.erb', collection: [@order]).to_str
