@@ -29,6 +29,7 @@ $('#tr_type select[name="type"]').change(function() {
 	</li>
 	<li>
 		媒体名<%= select "order", :media, @mag %>
+		<% @mediatype = true %>
 	</li>
 	<li>
 		発売日
@@ -81,10 +82,10 @@ $('#tr_type select[name="type"]').change(function() {
 	</li>
 	<li>
 		媒体名 <%= select "order", :media, @web %>
+		<% @mediatype = false %>
 	</li>
 	<li>
-		発売日
-		<%= date_field("order", "release_date")%>
+		掲載期間
 	</li>
 	<li>
 		広告主  <%= text_field "order", :client %>
