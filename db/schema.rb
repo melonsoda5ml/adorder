@@ -11,9 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150411145516) do
+ActiveRecord::Schema.define(version: 20150413062837) do
 
   create_table "homes", force: true do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "media", force: true do |t|
+    t.integer  "type"
+    t.string   "symbol"
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -51,6 +59,8 @@ ActiveRecord::Schema.define(version: 20150411145516) do
     t.string   "notes"
     t.string   "person_in_charge"
     t.integer  "type"
+    t.date     "start_date"
+    t.date     "end_date"
   end
 
   create_table "users", force: true do |t|

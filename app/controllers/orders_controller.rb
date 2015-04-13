@@ -15,17 +15,20 @@ class OrdersController < ApplicationController
 	@order = Order.find(params[:id])
 	if @order.type == 0
 		@type = MEDIATYPE_MAGAZINE
+		print "雑誌を表示\n"
 	elsif @order.type == 1
 		@type = MEDIATYPE_WEB
+		print "ウェブを表示\n"
 	end
+	
 	respond_with(@order)
   end
 
   def new
-	@mag = CSV.read("config/csv_data/mag.csv")
-	@web = CSV.read("config/csv_data/web.csv")
-    	@mediatype = false
-    respond_with(@order)
+	#@m = Medium.find_by(:type=>0)
+	#puts @m
+	puts Medium.all
+	respond_with(@order)
   end
 
   def edit
@@ -80,15 +83,24 @@ end
 
 private
 
-def set_order(order)	
+def set_order(order)
+print "メディアの種別="
+print order_params[:media]
+
+=begin
+	print @mediatype
 	if @mediatype == true #雑誌
 		order.type = 0
-		
+		order.end_date = null
+		print "雑誌を登録\n"
 	else #Web
 		order.type = 1
+		order.end_date = order_params[:end_date]
+		print "ウェブを登録\n"
 	end
+=end
     	order.media = order_params[:media]
-    	order.release_date = order_params[:release_date]
+    	order.start_date = order_params[:start_date]
     	order.client = order_params[:client]
     	order.agent = order_params[:agent]
     	order.space = order_params[:space]

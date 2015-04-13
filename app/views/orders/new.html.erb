@@ -27,13 +27,13 @@ $('#tr_type select[name="type"]').change(function() {
 	<li>
 		状況 <%= select :status, :count, {"決定"=>0, "角度高め"=>1, "提案中"=>2} %>
 	</li>
+
 	<li>
-		媒体名<%= select "order", :media, @mag %>
-		<% @mediatype = true %>
+		媒体名<%= collection_select("order", :media, Medium.where(:type=>0), :name, :name) %>
 	</li>
 	<li>
 		発売日
-		<%= date_field("order", "release_date")%>
+		<%= date_field("order", "start_date")%>
 	</li>
 	<li>
 		広告主  <%= text_field "order", :client %>
@@ -81,11 +81,11 @@ $('#tr_type select[name="type"]').change(function() {
 		状況 <%= select :status, :count, {"決定"=>0, "角度高め"=>1, "提案中"=>2} %>
 	</li>
 	<li>
-		媒体名 <%= select "order", :media, @web %>
-		<% @mediatype = false %>
+		媒体名<%= collection_select("order", :media, Medium.where(:type=>1), :name, :name) %>
 	</li>
 	<li>
 		掲載期間
+		<%= date_field("order", "start_date")%> - <%= date_field("order", "end_date")%>
 	</li>
 	<li>
 		広告主  <%= text_field "order", :client %>
