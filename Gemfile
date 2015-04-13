@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'awesome_print'
 gem 'oauth'
 gem 'oauth2'
 gem 'viewpoint'

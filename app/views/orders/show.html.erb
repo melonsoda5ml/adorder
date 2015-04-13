@@ -27,7 +27,7 @@ $('#tr_type select[name="type"]').change(function() {
 
 <ul id="ul_mag" style="display: none; list-style:none;">
 	<li>状況:<%= @order.status %><li>
-	<li>媒体:<%= @order.media %></li>
+	<li>媒体:<%= @order.media["0"] %></li>
 	<li>発売日:<%= @order.start_date %></li>
 	<li>金額:<%= @order.price %>万円</li>
 	<li>広告主:<%= @order.client %></li>

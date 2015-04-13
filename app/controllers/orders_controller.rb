@@ -25,9 +25,6 @@ class OrdersController < ApplicationController
   end
 
   def new
-	#@m = Medium.find_by(:type=>0)
-	#puts @m
-	puts Medium.all
 	respond_with(@order)
   end
 
@@ -39,8 +36,10 @@ class OrdersController < ApplicationController
   end
 
   def create
-  	@order = set_order(Order.new)
-  	
+  	#@order = set_order(order)
+  	@order = Order.new(order_params)
+  	ap @order
+  	@order.save
 	if params[:mail][:send] == "1"
 		#Mailer.sendmail(@order).deliver
 		sendmail(@order)
@@ -84,21 +83,9 @@ end
 private
 
 def set_order(order)
-print "メディアの種別="
-print order_params[:media]
-
+	order=Order.new(order_params)
 =begin
-	print @mediatype
-	if @mediatype == true #雑誌
-		order.type = 0
-		order.end_date = null
-		print "雑誌を登録\n"
-	else #Web
-		order.type = 1
-		order.end_date = order_params[:end_date]
-		print "ウェブを登録\n"
-	end
-=end
+	order.type = order_params[:type]
     	order.media = order_params[:media]
     	order.start_date = order_params[:start_date]
     	order.client = order_params[:client]
@@ -106,7 +93,6 @@ print order_params[:media]
     	order.space = order_params[:space]
     	order.margin = order_params[:margin]
     	order.price = order_params[:price]
-    	order.rate =  params[:rate][:count].to_i
     	order.account = order_params[:account]
     	order.production = order_params[:production]
     	order.sample = order_params[:sample]
@@ -115,6 +101,8 @@ print order_params[:media]
     	order.download_pdf = order_params[:download_pdf]
     	order.clickcount = order_params[:clickcount]
     	order.notes = order_params[:notes]
+=end
+    	order.rate =  params[:order][:rate].to_i
     	order.user_id = current_user.id
     	order.status = params[:status][:count].to_i
     	order.save
@@ -122,7 +110,7 @@ print order_params[:media]
     end
 
 def order_params
-    	params[:order]
+	params.require(:order).permit(:type, :status, :media, :start_date, :end_date, :client, :agent, :price, :margin, :rate, :account, :sample, :production, :notes, :person_in_chage)
 end
 
 end

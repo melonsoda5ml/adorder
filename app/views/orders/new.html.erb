@@ -1,9 +1,9 @@
 <script type="text/javascript">
 $(function(){
-$('#tr_type select[name="type"]').change(function() {
-	if ($('select[name="type"] option:selected').val() == 'web') 
+$('#order_type').change(function() {
+	if ($('#order_type option:selected').val() == 1) 
 		$('#ul_web').css('display','table-row') && $('#ul_mag').css('display','none');
-	else if ($('select[name="type"] option:selected').val() == 'mag') 
+	else if ($('#order_type option:selected').val() == 0) 
 		$('#ul_mag').css('display','table-row') && $('#ul_web').css('display','none');
 	else $('#ul_web').css('display','none');
   });
@@ -25,11 +25,14 @@ $('#tr_type select[name="type"]').change(function() {
 <%= form_tag :action => :create do %>
 <ul id="ul_mag" style="list-style:none;">
 	<li>
-		状況 <%= select :status, :count, {"決定"=>0, "角度高め"=>1, "提案中"=>2} %>
+		雑誌orWeb<%= select :order, :type, {"雑誌"=>0, "Web"=>1} %>
+	</li>
+	<li>
+		状況 <%= select :order, :status, {"決定"=>0, "角度高め"=>1, "提案中"=>2} %>
 	</li>
 
 	<li>
-		媒体名<%= collection_select("order", :media, Medium.where(:type=>0), :name, :name) %>
+		媒体名<%= collection_select("order", "media", Medium.where(:type=>0), :symbol, :name) %>
 	</li>
 	<li>
 		発売日
@@ -51,7 +54,7 @@ $('#tr_type select[name="type"]').change(function() {
 		マージン <%= text_field "order", :margin %>%
 	</li>
 	<li>
-		レート <%= select :rate, :count, {"1回"=>1, "3回"=>3} %>
+		レート <%= select :order, :rate, {"1回"=>1, "3回"=>3} %>
 	</li>
 	<li>
 		請求先 <%= text_field "order", :account %>
@@ -78,7 +81,10 @@ $('#tr_type select[name="type"]').change(function() {
 <%= form_tag :action => :create do %>
 <ul id="ul_web" style="display: none; list-style:none;">
 	<li>
-		状況 <%= select :status, :count, {"決定"=>0, "角度高め"=>1, "提案中"=>2} %>
+		雑誌orWeb<%= select :order, :type, {"雑誌"=>0, "Web"=>1} %>
+	</li>
+	<li>
+		状況 <%= select :order, :status, {"決定"=>0, "角度高め"=>1, "提案中"=>2} %>
 	</li>
 	<li>
 		媒体名<%= collection_select("order", :media, Medium.where(:type=>1), :name, :name) %>
@@ -103,7 +109,7 @@ $('#tr_type select[name="type"]').change(function() {
 		マージン <%= text_field "order", :margin %>%
 	</li>
 	<li>
-		レート <%= select :rate, :count, {"1回"=>1, "3回"=>3} %>
+		レート <%= select :order, :rate, {"1回"=>1, "3回"=>3} %>
 	</li>
 	<li>
 		請求先 <%= text_field "order", :account %>
