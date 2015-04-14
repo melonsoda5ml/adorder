@@ -1,36 +1,57 @@
 <script type="text/javascript">
 $(function(){
 $('#order_type').change(function() {
-	if ($('#order_type option:selected').val() == 1) 
-		$('#ul_web').css('display','table-row') && $('#ul_mag').css('display','none');
-	else if ($('#order_type option:selected').val() == 0) 
+	if ($('#order_type option:selected').val() == 0) 
 		$('#ul_mag').css('display','table-row') && $('#ul_web').css('display','none');
-	else $('#ul_web').css('display','none');
-  });
+	else if ($('#order_type option:selected').val() == 1) 
+		$('#ul_web').css('display','table-row') && $('#ul_mag').css('display','none');
+	 });
 });
 </script>
 
 <h1>新規オーダー情報</h1>
-<table>
-	<tr id="tr_type">
-	<td>
-      <select name="type">
-        <option value="mag">雑誌
-        <option value="web">Web
-      </select>
-      	</td>
-      	</tr>
-</table>
-  
+
 <%= form_tag :action => :create do %>
-<ul id="ul_mag" style="list-style:none;">
+<ul id="ul_common" style="list-style:none;">
 	<li>
-		雑誌orWeb<%= select :order, :type, {"雑誌"=>0, "Web"=>1} %>
+		<%= select :order, :type, {"雑誌"=>0, "Web"=>1} %>
 	</li>
 	<li>
 		状況 <%= select :order, :status, {"決定"=>0, "角度高め"=>1, "提案中"=>2} %>
 	</li>
+	<li>
+		広告主  <%= text_field "order", :client %>
+	</li>
+	<li>
+		広告会社 <%= text_field "order", :agent %>
+	</li>
+	<li>
+		スペース <%= text_field "order", :space %>
+	</li>
+	<li>
+		料金 <%= text_field "order", :price %>万円
+	</li>
+	<li>
+		マージン <%= text_field "order", :margin %>%
+	</li>
+	<li>
+		レート <%= select :order, :rate, {"1回"=>1, "3回"=>3} %>
+	</li>
+	<li>
+		請求先 <%= text_field "order", :account %>
+	</li>
+	<li>
+		制作会社 <%= text_field "order", :production %>
+	</li>
+	<li>
+		備考 <%= text_field "order", :notes %>
+	</li>
+	<li>
+		担当者 <%= text_field "order", :person_in_charge %>
+	</li>
+</ul>
 
+<ul id="ul_mag" style="list-style:none;">
 	<li>
 		媒体名<%= collection_select("order", "media", Medium.where(:type=>0), :symbol, :name) %>
 	</li>
@@ -38,97 +59,23 @@ $('#order_type').change(function() {
 		発売日
 		<%= date_field("order", "start_date")%>
 	</li>
-	<li>
-		広告主  <%= text_field "order", :client %>
-	</li>
-	<li>
-		広告会社 <%= text_field "order", :agent %>
-	</li>
-	<li>
-		スペース <%= text_field "order", :space %>
-	</li>
-	<li>
-		料金 <%= text_field "order", :price %>万円
-	</li>
-	<li>
-		マージン <%= text_field "order", :margin %>%
-	</li>
-	<li>
-		レート <%= select :order, :rate, {"1回"=>1, "3回"=>3} %>
-	</li>
-	<li>
-		請求先 <%= text_field "order", :account %>
-	</li>
-	<li>
+		<li>
 		掲載誌送付先 <%= text_field "order", :sample %>
 	</li>
-	<li>
-		制作会社 <%= text_field "order", :production %>
-	</li>
-	<li>
-		備考 <%= text_field "order", :notes %>
-	</li>
-	<li>
-		担当者 <%= text_field "order", :person_in_charge %>
-	</li>
-	<li>
-		オーダー情報をメールで送信する <%= check_box "mail", "send" %>
-	</li>
-	<%= submit_tag '申し込む', :user_id => current_user.id %>
 </ul>
-<% end %>
-
-<%= form_tag :action => :create do %>
 <ul id="ul_web" style="display: none; list-style:none;">
 	<li>
-		雑誌orWeb<%= select :order, :type, {"雑誌"=>0, "Web"=>1} %>
-	</li>
-	<li>
-		状況 <%= select :order, :status, {"決定"=>0, "角度高め"=>1, "提案中"=>2} %>
-	</li>
-	<li>
-		媒体名<%= collection_select("order", :media, Medium.where(:type=>1), :name, :name) %>
+		媒体名<%= collection_select("order", "media", Medium.where(:type=>1), :symbol, :name) %>
 	</li>
 	<li>
 		掲載期間
 		<%= date_field("order", "start_date")%> - <%= date_field("order", "end_date")%>
 	</li>
-	<li>
-		広告主  <%= text_field "order", :client %>
-	</li>
-	<li>
-		広告会社 <%= text_field "order", :agent %>
-	</li>
-	<li>
-		スペース <%= text_field "order", :space %>
-	</li>
-	<li>
-		料金 <%= text_field "order", :price %>万円
-	</li>
-	<li>
-		マージン <%= text_field "order", :margin %>%
-	</li>
-	<li>
-		レート <%= select :order, :rate, {"1回"=>1, "3回"=>3} %>
-	</li>
-	<li>
-		請求先 <%= text_field "order", :account %>
-	</li>
-	<li>
-		掲載誌送付先 <%= text_field "order", :sample %>
-	</li>
-	<li>
-		制作会社 <%= text_field "order", :production %>
-	</li>
-	<li>
-		備考 <%= text_field "order", :notes %>
-	</li>
-	<li>
-		担当者 <%= text_field "order", :person_in_charge %>
-	</li>
+</ul>
+<ul style="list-style:none;">
 	<li>
 		オーダー情報をメールで送信する <%= check_box "mail", "send" %>
 	</li>
-	<%= submit_tag '申し込む', :user_id => current_user.id %>
 </ul>
+<%= submit_tag '申し込む', :user_id => current_user.id %>
 <% end %>
