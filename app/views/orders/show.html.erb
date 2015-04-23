@@ -1,50 +1,26 @@
 <p id="notice"><%= notice %></p>
 
-<script type="text/javascript">
-$(function(){
-$('#tr_type select[name="type"]').change(function() {
-	if ($('select[name="type"] option:selected').val() == 'インターネット') 
-		$('#ul_web').css('display','table-row') && $('#ul_mag').css('display','none');
-	else if ($('select[name="type"] option:selected').val() == '雑誌') 
-		$('#ul_mag').css('display','table-row') && $('#ul_web').css('display','none');
-	else $('#ul_web').css('display','none');
-  });
-});
-</script>
-
 <h1>オーダー情報</h1>
-<table>
-	<tr id="tr_type">
-		<td>
-			<h3 name="type">
-				<%= @type %>
-			</h3>
- 	     	</td>
-      	</tr>
-</table>
 
-<%= @order.created_at.strftime("%Y年%m月%d日") %>に登録された、<%= @type %>広告のオーダーです。
+<%= @order.created_at.strftime("%Y年%m月%d日") %>に登録された、
+<% if @order.type == 0 %>
+	<%= "雑誌広告" %>
+<% elsif @order.type == 1 %>
+	<%= "インターネット広告" %>
+<% end %>
+のオーダーです。
 
-<ul id="ul_mag" style="display: none; list-style:none;">
-	<li>状況:<%= @order.status %><li>
-	<li>媒体:<%= @order.media["0"] %></li>
-	<li>発売日:<%= @order.start_date %></li>
-	<li>金額:<%= @order.price %>万円</li>
-	<li>広告主:<%= @order.client %></li>
-	<li>広告会社:<%= @order.agent %></li>
-	<li>マージン:<%= @order.margin %></li>
-	<li>スペース:<%= @order.space %></li>
-	<li>レート:<%= @order.rate %></li>
-	<li>請求先:<%= @order.account %></li>
-	<li>請求書送付先:<%= @order.sample %></li>
-	<li>制作会社:<%= @order.production %></li>
-	<li>備考:<%= @order.notes %></li>
-</ul>
-
-<ul id="ul_web" style="list-style:none;">
+<ul style="list-style:none;">
 	<li>状況:<%= @order.status %><li>
 	<li>媒体:<%= @order.media %></li>
-	<li>掲載期間:<%= @order.start_date %> - <%= @order.end_date %></li>
+	
+	<% if @order.type == 0 %>
+		<li>発売日:<%= @order.start_date %></li>
+		<li>掲載誌送付先:<%= @order.sample %></li>
+	<% elsif @order.type == 1 %>
+		<li>掲載期間<%= @order.start_date %> - <%= @order.end_date %></li>
+	<% end %>
+	
 	<li>金額:<%= @order.price %>万円</li>
 	<li>広告主:<%= @order.client %></li>
 	<li>広告会社:<%= @order.agent %></li>

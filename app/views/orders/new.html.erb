@@ -2,9 +2,9 @@
 $(function(){
 $('#order_type').change(function() {
 	if ($('#order_type option:selected').val() == 0) 
-		$('#ul_mag').css('display','table-row') && $('#ul_web').css('display','none');
+		$('#div_mag').css('display','table-row') && $('#div_web').css('display','none');
 	else if ($('#order_type option:selected').val() == 1) 
-		$('#ul_web').css('display','table-row') && $('#ul_mag').css('display','none');
+		$('#div_web').css('display','table-row') && $('#div_mag').css('display','none');
 	 });
 });
 </script>
@@ -12,13 +12,39 @@ $('#order_type').change(function() {
 <h1>新規オーダー情報</h1>
 
 <%= form_tag :action => :create do %>
-<ul id="ul_common" style="list-style:none;">
+<ul style="list-style:none;">
 	<li>
 		<%= select :order, :type, {"雑誌"=>0, "Web"=>1} %>
 	</li>
 	<li>
 		状況 <%= select :order, :status, {"決定"=>0, "角度高め"=>1, "提案中"=>2} %>
 	</li>
+		
+	<div id="div_web" style="display: none;">
+		<li>
+			媒体名<!--%= collection_select("order", "media", Medium.where(:type=>num), :symbol, :name) %-->
+			<%= select :order, :media_web, Medium.where(:type=>1).map{|m| [m.name, m.symbol]} %>
+		</li>
+		<li>
+			掲載期間
+			<%= date_field("order", "start_date")%> - <%= date_field("order", "end_date")%>
+		</li>
+	</div>
+	
+	<div id ="div_mag">
+		<li>
+			媒体名<!--%= collection_select("order", "media", Medium.where(:type=>num), :symbol, :name) %-->
+			<%= select :order, :media_mag, Medium.where(:type=>0).map{|m| [m.name, m.symbol]} %>
+		</li>
+		<li>
+			発売日
+			<%= date_field("order", "start_date")%>
+		</li>
+		<li>
+			掲載誌送付先 <%= text_field "order", :sample %>
+		</li>
+	</div>
+		
 	<li>
 		広告主  <%= text_field "order", :client %>
 	</li>
@@ -48,31 +74,7 @@ $('#order_type').change(function() {
 	</li>
 	<li>
 		担当者 <%= text_field "order", :person_in_charge %>
-	</li>
-</ul>
-
-<ul id="ul_mag" style="list-style:none;">
-	<li>
-		媒体名<%= collection_select("order", "media", Medium.where(:type=>0), :symbol, :name) %>
-	</li>
-	<li>
-		発売日
-		<%= date_field("order", "start_date")%>
-	</li>
-		<li>
-		掲載誌送付先 <%= text_field "order", :sample %>
-	</li>
-</ul>
-<ul id="ul_web" style="display: none; list-style:none;">
-	<li>
-		媒体名<%= collection_select("order", "media", Medium.where(:type=>1), :symbol, :name) %>
-	</li>
-	<li>
-		掲載期間
-		<%= date_field("order", "start_date")%> - <%= date_field("order", "end_date")%>
-	</li>
-</ul>
-<ul style="list-style:none;">
+	</li>	
 	<li>
 		オーダー情報をメールで送信する <%= check_box "mail", "send" %>
 	</li>

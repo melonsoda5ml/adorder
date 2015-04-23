@@ -13,14 +13,6 @@ class OrdersController < ApplicationController
 
   def show
 	@order = Order.find(params[:id])
-	if @order.type == 0
-		@type = MEDIATYPE_MAGAZINE
-		print "雑誌を表示\n"
-	elsif @order.type == 1
-		@type = MEDIATYPE_WEB
-		print "ウェブを表示\n"
-	end
-	
 	respond_with(@order)
   end
 
@@ -29,16 +21,23 @@ class OrdersController < ApplicationController
   end
 
   def edit
-	@mag = CSV.read("config/csv_data/mag.csv")
-	@web = CSV.read("config/csv_data/web.csv")
 	@order = Order.find(params[:id])
     respond_with(@order)
   end
 
   def create
-  	#@order = set_order(order)
   	@order = Order.new(order_params)
-  	ap @order
+    	@order.user_id = current_user.id
+    	if @order.type == 0
+    		puts "雑誌"
+    		puts order_params[:media_mag]
+    		@order.media = order_params[:media_mag]
+    	elsif @order.type == 1
+    		puts "WEB"
+    		puts order_params[:media_web]
+    		@order.media = order_params[:media_web]
+    	end
+    	ap @order
   	@order.save
 	if params[:mail][:send] == "1"
 		#Mailer.sendmail(@order).deliver
@@ -82,35 +81,9 @@ end
 
 private
 
-def set_order(order)
-	order=Order.new(order_params)
-=begin
-	order.type = order_params[:type]
-    	order.media = order_params[:media]
-    	order.start_date = order_params[:start_date]
-    	order.client = order_params[:client]
-    	order.agent = order_params[:agent]
-    	order.space = order_params[:space]
-    	order.margin = order_params[:margin]
-    	order.price = order_params[:price]
-    	order.account = order_params[:account]
-    	order.production = order_params[:production]
-    	order.sample = order_params[:sample]
-    	order.placement_report = order_params[:placement_report]
-    	order.attribution_report = order_params[:attribution_report]
-    	order.download_pdf = order_params[:download_pdf]
-    	order.clickcount = order_params[:clickcount]
-    	order.notes = order_params[:notes]
-=end
-    	order.rate =  params[:order][:rate].to_i
-    	order.user_id = current_user.id
-    	order.status = params[:status][:count].to_i
-    	order.save
-	return order
-    end
 
 def order_params
-	params.require(:order).permit(:type, :status, :media, :start_date, :end_date, :client, :agent, :price, :margin, :rate, :account, :sample, :production, :notes, :person_in_chage)
+	params.require(:order).permit(:type, :status, :start_date, :end_date, :client, :agent, :price, :margin, :rate, :account, :sample, :production, :notes, :person_in_chage, :media_mag, :media_web)
 end
 
 end
