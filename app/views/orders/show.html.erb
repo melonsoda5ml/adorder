@@ -15,7 +15,7 @@
 	<li>媒体:<%= @order.media %></li>
 	
 	<% if @order.type == 0 %>
-		<li>発売日:<%= @order.start_date %></li>
+		<li>発売日:<%= @order.release_date %></li>
 		<li>掲載誌送付先:<%= @order.sample %></li>
 	<% elsif @order.type == 1 %>
 		<li>掲載期間<%= @order.start_date %> - <%= @order.end_date %></li>

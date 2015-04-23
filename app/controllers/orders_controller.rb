@@ -25,17 +25,19 @@ class OrdersController < ApplicationController
     respond_with(@order)
   end
 
-  def create
+  def create 
   	@order = Order.new(order_params)
     	@order.user_id = current_user.id
     	if @order.type == 0
-    		puts "雑誌"
-    		puts order_params[:media_mag]
     		@order.media = order_params[:media_mag]
+    		@order.release_date =  order_params[:release_date]
+    		@order.start_date = nil
+    		@order.end_date = nil
     	elsif @order.type == 1
-    		puts "WEB"
-    		puts order_params[:media_web]
     		@order.media = order_params[:media_web]
+    		@order.release_date =  nil
+    		@order.start_date = order_params[:start_date]
+    		@order.end_date = order_params[:end_date]
     	end
     	ap @order
   	@order.save
@@ -83,7 +85,7 @@ private
 
 
 def order_params
-	params.require(:order).permit(:type, :status, :start_date, :end_date, :client, :agent, :price, :margin, :rate, :account, :sample, :production, :notes, :person_in_chage, :media_mag, :media_web)
+	params.require(:order).permit(:type, :status, :release_date, :start_date, :end_date, :client, :agent, :price, :margin, :rate, :account, :sample, :production, :notes, :person_in_chage, :media_mag, :media_web)
 end
 
 end
