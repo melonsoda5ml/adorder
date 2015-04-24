@@ -1,26 +1,34 @@
-<h1>オーダー情報を編集</h1>
+<h1>オーダー情報を変更</h1>
 
-<ul class="orders">
-	<%= form_for(@order, :url=>{:action => 'update'}, :html=>{:method =>:put}) do %>
+<%= form_for(@order, :url=>{:action => 'update'}, :html=>{:method =>:put}) do %>
+<ul style="list-style:none;">
 	<li>
-		状況 <%= select :status, :count, {"決定"=>0, "角度高め"=>1, "提案中"=>2} %>
+		状況 <%= select :order, :status, {"決定"=>0, "角度高め"=>1, "提案中"=>2} %>
 	</li>
-	<li>
-		媒体名
-		<%= select "order", :media, @csv %>
-	</li>
-	<li>
-		発売日
-		<%= date_field("order", "release_date")%>
-		<!--%= date_select(
-		:release_date,
-		use_month_numbers: true,
-		start_year: (Time.now.year),
-		end_year: (Time.now.year),
-		default:(Time.now.year),
-		date_separator: '%s')
-		%-->
-	</li>
+	
+	<% if @order.type == 0 %>	
+		<li>
+			媒体名<!--%= collection_select("order", "media", Medium.where(:type=>num), :symbol, :name) %-->
+			<%= select :order, :media_mag, Medium.where(:type=>0).map{|m| [m.name, m.symbol]} %>
+		</li>
+		<li>
+			発売日
+			<%= date_field("order", "release_date")%>
+		</li>
+		<li>
+			掲載誌送付先 <%= text_field "order", :sample %>
+		</li>
+	<% elsif @order.type == 1 %>
+		<li>
+			媒体名
+			<%= select :order, :media_web, Medium.where(:type=>1).map{|m| [m.name, m.symbol]} %>
+		</li>
+		<li>
+			掲載期間:
+			<%= date_field("order", "start_date")%> - <%= date_field("order", "end_date")%>
+		</li>
+	<% end %>
+	
 	<li>
 		広告主  <%= text_field "order", :client %>
 	</li>
@@ -34,19 +42,26 @@
 		料金 <%= text_field "order", :price %>万円
 	</li>
 	<li>
-		レート <%= select :rate, :count, {"1回"=>1, "3回"=>3} %>
+		マージン <%= text_field "order", :margin %>%
+	</li>
+	<li>
+		レート <%= select :order, :rate, {"1回"=>1, "3回"=>3} %>
 	</li>
 	<li>
 		請求先 <%= text_field "order", :account %>
 	</li>
 	<li>
-		掲載誌送付先 <%= text_field "order", :sample %>
+		制作会社 <%= text_field "order", :production %>
 	</li>
 	<li>
-		オーダー情報をメールで再送する <%= check_box "mail", "send" %>
+		備考 <%= text_field "order", :notes %>
 	</li>
-	<%= submit_tag '編集', :user_id => current_user.id %>
-<% end %>
+	<li>
+		担当者 <%= text_field "order", :person_in_charge %>
+	</li>	
+	<li>
+		オーダー情報をメールで送信する <%= check_box "mail", "send" %>
+	</li>
 </ul>
-
-<%= link_to '戻る', orders_path %>
+<%= submit_tag '再登録する', :user_id => current_user.id %>
+<% end %>

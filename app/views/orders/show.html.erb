@@ -18,7 +18,7 @@
 		<li>発売日:<%= @order.release_date %></li>
 		<li>掲載誌送付先:<%= @order.sample %></li>
 	<% elsif @order.type == 1 %>
-		<li>掲載期間<%= @order.start_date %> - <%= @order.end_date %></li>
+		<li>掲載期間:<%= @order.start_date %> - <%= @order.end_date %></li>
 	<% end %>
 	
 	<li>金額:<%= @order.price %>万円</li>

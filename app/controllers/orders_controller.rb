@@ -22,7 +22,7 @@ class OrdersController < ApplicationController
 
   def edit
 	@order = Order.find(params[:id])
-    respond_with(@order)
+    	respond_with(@order)
   end
 
   def create 
@@ -50,7 +50,8 @@ class OrdersController < ApplicationController
   end
 
   def update
-	@order = set_order(Order.find(params[:id]))
+	@order = Order.find(params[:id])
+	@order.update(order_params)
 	if params[:mail][:send] == "1"
 		#Mailer.sendmail(@order).deliver
 		sendmail(@order)
@@ -85,7 +86,9 @@ private
 
 
 def order_params
-	params.require(:order).permit(:type, :status, :release_date, :start_date, :end_date, :client, :agent, :price, :margin, :rate, :account, :sample, :production, :notes, :person_in_chage, :media_mag, :media_web)
+	params.require(:order).permit(
+	:type, :status, :release_date, :start_date, :end_date, :client, :agent, :price, :margin, :rate, :account, :sample, :production, :notes, :person_in_chage, :media_mag, :media_web
+	)
 end
 
 end
