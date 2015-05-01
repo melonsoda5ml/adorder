@@ -1,5 +1,13 @@
 source 'https://rubygems.org'
 
+group :development, :test do
+	gem 'rspec-rails'
+	gem 'rspec-core'
+	gem 'rspec-expectations'
+	gem 'rspec-mocks'
+	gem 'rspec-support'
+end
+
 gem 'awesome_print'
 gem 'oauth'
 gem 'oauth2'

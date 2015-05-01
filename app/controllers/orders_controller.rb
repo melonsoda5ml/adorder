@@ -28,12 +28,12 @@ class OrdersController < ApplicationController
   def create 
   	@order = Order.new(order_params)
     	@order.user_id = current_user.id
-    	if @order.type == 0
+    	if @order.type == Order::MAGAZINE_SCHEME
     		@order.media = order_params[:media_mag]
     		@order.release_date =  order_params[:release_date]
     		@order.start_date = nil
     		@order.end_date = nil
-    	elsif @order.type == 1
+    	elsif @order.type == Order::WEB_SCHEME
     		@order.media = order_params[:media_web]
     		@order.release_date =  nil
     		@order.start_date = order_params[:start_date]
@@ -61,6 +61,7 @@ class OrdersController < ApplicationController
   end
 
 def destroy
+	puts "ですとろい！！！"
 	Order.find(params[:id]).destroy
 	flash[:success] = "オーダーを削除しました"
 	redirect_to orders_path
@@ -83,7 +84,6 @@ def sendmail(order)
 end
 
 private
-
 
 def order_params
 	params.require(:order).permit(

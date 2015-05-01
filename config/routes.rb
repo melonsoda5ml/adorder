@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
 
   resources :orders
+	delete 'orders/:order_id' => 'orders#destroy'
 
 	devise_for :users
   resources :users
 
   resources :homes
-
 	root :to => "homes#index"
 
   # The priority is based upon order of creation: first created -> highest priority.

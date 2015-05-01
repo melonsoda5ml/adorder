@@ -22,9 +22,10 @@ $('#order_type').change(function() {
 		
 	<div id="div_web" style="display: none;">
 		<li>
-			媒体名<!--%= collection_select("order", "media", Medium.where(:type=>num), :symbol, :name) %-->
+			媒体名
 			<%= select :order, :media_web, Medium.where(:type=>1).map{|m| [m.name, m.symbol]} %>
 		</li>
+
 		<li>
 			掲載期間
 			<%= date_field("order", "start_date")%> - <%= date_field("order", "end_date")%>
@@ -33,7 +34,7 @@ $('#order_type').change(function() {
 	
 	<div id ="div_mag">
 		<li>
-			媒体名<!--%= collection_select("order", "media", Medium.where(:type=>num), :symbol, :name) %-->
+			媒体名
 			<%= select :order, :media_mag, Medium.where(:type=>0).map{|m| [m.name, m.symbol]} %>
 		</li>
 		<li>
@@ -52,13 +53,14 @@ $('#order_type').change(function() {
 		広告会社 <%= text_field "order", :agent %>
 	</li>
 	<li>
-		スペース <%= text_field "order", :space %>
+		スペース <!--%= text_field "order", :space %-->
+		<%= select :order, :space, Space.where(:type=>0).map{|m| [m.name, m.name]} %>
 	</li>
 	<li>
 		料金 <%= text_field "order", :price %>万円
 	</li>
 	<li>
-		マージン <%= text_field "order", :margin %>%
+		マージン<%= select :order, :rate, {"15%"=>15, "20%"=>20} %>
 	</li>
 	<li>
 		レート <%= select :order, :rate, {"1回"=>1, "3回"=>3} %>

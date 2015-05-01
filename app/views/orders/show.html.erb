@@ -2,10 +2,10 @@
 
 <h1>オーダー情報</h1>
 
-<%= @order.created_at.strftime("%Y年%m月%d日") %>に登録された、
-<% if @order.type == 0 %>
+<%= @order.created_at.strftime("%Y年%m月%d日") %>に登録された
+<% if @order.type == Order::MAGAZINE_SCHEME %>
 	<%= "雑誌広告" %>
-<% elsif @order.type == 1 %>
+<% elsif @order.type == Order::WEB_SCHEME %>
 	<%= "インターネット広告" %>
 <% end %>
 のオーダーです。
@@ -14,10 +14,10 @@
 	<li>状況:<%= @order.status %><li>
 	<li>媒体:<%= @order.media %></li>
 	
-	<% if @order.type == 0 %>
+	<% if @order.type == Order::MAGAZINE_SCHEME %>
 		<li>発売日:<%= @order.release_date %></li>
 		<li>掲載誌送付先:<%= @order.sample %></li>
-	<% elsif @order.type == 1 %>
+	<% elsif @order.type == Order::WEB_SCHEME %>
 		<li>掲載期間:<%= @order.start_date %> - <%= @order.end_date %></li>
 	<% end %>
 	
@@ -34,5 +34,5 @@
 </ul>
 
 <%= link_to '編集', edit_order_path(@order) %> |
-<%= link_to '削除', @order, method: :destroy, data: { confirm: '本当に削除しますか？' } %> |
+<%= link_to '削除', @order, method: :delete, data: { confirm: '本当に削除しますか？' } %> |
 <%= link_to '戻る', orders_path %>
