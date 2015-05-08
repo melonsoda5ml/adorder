@@ -17,6 +17,12 @@
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
 
+	<div class="field">
+		<%= f.label "役割／権限" %>
+		<br />
+		<%= f.select :role,  [["営業",0],["媒体マネージャー",1], ["業務",2]] %>
+	<div>
+
   <div class="field">
     <%= f.label "新しいパスワード" %> <i>(変更する必要がなければ、空欄のままにしてください)</i><br />
     <%= f.password_field :password, autocomplete: "off" %>
