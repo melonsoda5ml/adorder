@@ -26,7 +26,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 		@user.name = user_params[:name]
-		p @user.name
+		@user.division = user_params[:division]
+		@user.role = user_params[:role]
     @user.save
     respond_with(@user)
   end
@@ -53,6 +54,6 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params[:user]
+			params.require(:user).permit(:name,:email,:division,:role)
     end
 end

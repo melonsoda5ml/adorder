@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150424121018) do
+ActiveRecord::Schema.define(version: 20150508055204) do
 
   create_table "homes", force: true do |t|
     t.datetime "created_at", null: false
@@ -22,16 +22,6 @@ ActiveRecord::Schema.define(version: 20150424121018) do
     t.integer  "type"
     t.string   "symbol"
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "order_menus", force: true do |t|
-    t.string   "media"
-    t.string   "agent"
-    t.string   "space"
-    t.integer  "rate"
-    t.integer  "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -84,6 +74,8 @@ ActiveRecord::Schema.define(version: 20150424121018) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "name"
+    t.string   "division"
+    t.integer  "role"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

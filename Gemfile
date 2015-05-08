@@ -14,6 +14,7 @@ gem 'oauth2'
 gem 'viewpoint'
 
 gem 'devise'
+gem 'cancan'
 gem 'exchanger'
 
 gem "therubyracer"

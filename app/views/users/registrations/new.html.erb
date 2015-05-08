@@ -9,9 +9,21 @@
   </div>
 
   <div class="field">
-    <%= f.label "メールアドレス" %><br />
-    <%= f.email_field :email %>
+    <%= f.label "メールアドレス" %>
+    <em>(業務で利用しているアドレスを入力してください)</em>
+    <br/><%= f.email_field :email %>
   </div>
+
+  <div class="field">
+    <%= f.label "所属部署" %><br />
+    <%= f.text_field :division %>
+  </div>
+
+  <div class="field">
+	<%= f.label "役割／権限" %>
+	<br />
+	<%= f.select :role,  [["営業",0],["媒体マネージャー",1], ["業務",2]] %>
+	<div>
 
   <div class="field">
     <%= f.label "パスワード" %>
