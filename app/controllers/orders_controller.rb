@@ -87,7 +87,7 @@ private
 
 def order_params
 	params.require(:order).permit(
-	:type, :status, :release_date, :start_date, :end_date, :client, :agent, :price, :margin, :rate, :account, :sample, :production, :notes, :person_in_chage, :media_mag, :media_web
+	:type, :status, :release_date, :start_date, :end_date, :client, :agent, :price, :margin, :rate, :account, :sample, :production, :notes, :person_in_chage, :media_mag, :media_web, :management_number
 	)
 end
 
