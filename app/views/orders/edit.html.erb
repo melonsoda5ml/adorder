@@ -59,6 +59,13 @@
 	<li>
 		担当者 <%= text_field "order", :person_in_charge %>
 	</li>	
+	<% if current_user.role == 0 %>
+	<% elsif current_user.role == 1 %>
+	<% elsif current_user.role == 2 %>
+	<li>
+		管理番号 <%= text_field "order", :management_number %>
+	</li>
+	<% end %>
 	<li>
 		オーダー情報をメールで送信する <%= check_box "mail", "send" %>
 	</li>

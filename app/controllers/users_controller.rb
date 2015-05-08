@@ -25,9 +25,9 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-		@user.name = user_params[:name]
-		@user.division = user_params[:division]
-		@user.role = user_params[:role]
+#		@user.name = user_params[:name]
+#		@user.division = user_params[:division]
+#		@user.role = user_params[:role]
     @user.save
     respond_with(@user)
   end
