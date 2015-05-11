@@ -15,16 +15,6 @@
 		<th>媒体</th>
 		<th>広告主</th>
 	</tr>
-
-    	<% @orders.each do |order| %>
-    		<% if order.user_id == current_user.id %>
-      			<tr>
-				<td><%= link_to '詳細', order %></td>
-				<td><%= order.media %></td>
-				<td><%= order.client %></td>
-     			 </tr>
-     		<% end %>
-    	<% end %>
   </tbody>
 
 </table>

@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150508101159) do
+ActiveRecord::Schema.define(version: 20150511012615) do
+
+  create_table "cases", force: true do |t|
+    t.string   "name"
+    t.string   "client"
+    t.string   "agent"
+    t.integer  "pic_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "status"
+  end
 
   create_table "homes", force: true do |t|
     t.datetime "created_at", null: false
@@ -28,30 +38,16 @@ ActiveRecord::Schema.define(version: 20150508101159) do
 
   create_table "orders", force: true do |t|
     t.string   "media"
-    t.date     "release_date"
-    t.string   "client"
-    t.string   "agent"
-    t.string   "space"
     t.integer  "price"
     t.integer  "rate"
-    t.string   "account"
-    t.string   "sample"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.integer  "user_id"
-    t.integer  "status"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
     t.integer  "margin"
-    t.string   "production"
-    t.boolean  "placement_report"
-    t.boolean  "attribution_report"
-    t.boolean  "download_pdf"
-    t.boolean  "clickcount"
     t.string   "notes"
-    t.string   "person_in_charge"
-    t.integer  "type"
-    t.date     "start_date"
-    t.date     "end_date"
     t.string   "management_number"
+    t.integer  "month_of_bill"
+    t.string   "address_of_bill"
+    t.integer  "case_id"
   end
 
   create_table "spaces", force: true do |t|

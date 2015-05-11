@@ -26,8 +26,14 @@ class OrdersController < ApplicationController
   end
 
   def create 
-  	@order = Order.new(order_params)
-    	@order.user_id = current_user.id
+	@case = Case.new(case_params)
+	@case.pic_id = current_user.id
+	@case.save
+
+ 	@order = Order.new(order_params)
+	@order.case_id = @case.id
+	@order.save
+=begin
     	if @order.type == Order::MAGAZINE_SCHEME
     		@order.media = order_params[:media_mag]
     		@order.release_date =  order_params[:release_date]
@@ -40,11 +46,12 @@ class OrdersController < ApplicationController
     		@order.end_date = order_params[:end_date]
     	end
     	ap @order
-  	@order.save
+   	@order.save
 	if params[:mail][:send] == "1"
 		#Mailer.sendmail(@order).deliver
 		sendmail(@order)
 	end
+=end
 	redirect_to orders_path
 	flash[:success] = "オーダーを登録しました"
   end
@@ -85,10 +92,12 @@ end
 
 private
 
+def case_params
+	params.require(:case).permit(:name, :client, :agent, :pic_id, :status)
+end
+
 def order_params
-	params.require(:order).permit(
-	:type, :status, :release_date, :start_date, :end_date, :client, :agent, :price, :margin, :rate, :account, :sample, :production, :notes, :person_in_chage, :media_mag, :media_web, :management_number
-	)
+	params.require(:order).permit(:media, :price, :margin, :rate, :notes, :media_mag, :media_web, :management_number, :month_of_bill, :address_of_bill, :case_id)
 end
 
 end
