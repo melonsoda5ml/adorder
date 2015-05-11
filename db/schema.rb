@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150511012615) do
+ActiveRecord::Schema.define(version: 20150511065927) do
 
   create_table "cases", force: true do |t|
     t.string   "name"
@@ -29,8 +29,8 @@ ActiveRecord::Schema.define(version: 20150511012615) do
   end
 
   create_table "media", force: true do |t|
-    t.integer  "type"
-    t.string   "symbol"
+    t.integer  "category"
+    t.string   "shorten"
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

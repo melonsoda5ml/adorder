@@ -1,8 +1,8 @@
 class CreateMedia < ActiveRecord::Migration
   def change
     create_table :media do |t|
-			t.integer :type
-			t.string :symbol
+			t.integer :category
+			t.string :shorten
 			t.string :name
       t.timestamps null: false
     end
