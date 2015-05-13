@@ -12,7 +12,9 @@ class OrdersController < ApplicationController
   end
 
   def show
-	@order = Order.find(params[:id])
+  	@order = Order.find(params[:id])
+	@case = Case.find(@order.case_id)
+	@mag = MagazineOrder.find_by_order_id(@order.id)
 	respond_with(@order)
   end
 
@@ -32,8 +34,13 @@ class OrdersController < ApplicationController
 
  	@order = Order.new(order_params)
 	@order.case_id = @case.id
+	@order.save
     	if @order.category == Order::MAGAZINE_SCHEME
-    		@order.media = order_params[:media_mag]
+    		@order.media = order_params[:media_mag] 
+    		@mag = MagazineOrder.new(mag_params)
+    		@mag.order_id = @order.id
+    		@mag.save
+    		pp @mag
     	elsif  @order.category == Order::WEB_SCHEME
     		@order.media = order_params[:media_web]
     	end
@@ -63,7 +70,7 @@ def destroy
 	Order.find(params[:id]).destroy
 	flash[:success] = "オーダーを削除しました"
 	redirect_to orders_path
- end
+end
 
 def sendmail(order)
 	@order = order
@@ -89,6 +96,10 @@ end
 
 def order_params
 params.require(:order).permit(:media, :price, :margin, :rate, :notes, :media_mag, :media_web, :management_number, :month_of_bill, :address_of_bill, :case_id, :category)
+end
+
+def mag_params
+params.require(:magazine_order).permit(:order_id, :issue, :release_date, :space, :ad_form, :production_costs, :production, :montgh_of_appropriation)
 end
 
 end

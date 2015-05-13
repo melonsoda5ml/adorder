@@ -29,6 +29,22 @@ $('#order_category').change(function() {
 			媒体名
 			<%= select :order, :media_mag, Medium.where(:category=>0).map{|m| [m.name, m.shorten]} %>
 		</li>
+		<li>
+			掲載号発売日
+			<%= date_field("magazine_order", "release_date")%>
+		</li>
+		<li>
+			スペース <%= text_field "magazine_order", :space %>
+		</li>
+		<li>
+			 純広告 or タイアップ <%= select :magazine_order, :ad_form,  {"純広告"=>true, "タイアップ"=>false} %>
+		</li>
+		<li>
+			 制作会社 <%= text_field "magazine_order", :production %>
+		</li>
+		<li>
+			 制作費 <%= text_field "magazine_order", :production_costs %>
+		</li>
 	</div>
 
 	<div id="div_web" style="display: none;">

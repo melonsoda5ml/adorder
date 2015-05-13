@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 	root :to => "homes#index"
 
 	resources :medium
+	resources :magazine_order
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
