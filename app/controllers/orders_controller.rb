@@ -32,14 +32,11 @@ class OrdersController < ApplicationController
 
  	@order = Order.new(order_params)
 	@order.case_id = @case.id
-	@order.media = order_params[:media_mag]
-=begin
-    	if @order.type == Order::MAGAZINE_SCHEME
+    	if @order.category == Order::MAGAZINE_SCHEME
     		@order.media = order_params[:media_mag]
-    	elsif @order.type == Order::WEB_SCHEME
+    	elsif  @order.category == Order::WEB_SCHEME
     		@order.media = order_params[:media_web]
     	end
-=end
     	pp @order
    	@order.save
 	if params[:mail][:send] == "1"
@@ -91,7 +88,7 @@ params.require(:case).permit(:name, :client, :agent, :pic_id, :status)
 end
 
 def order_params
-params.require(:order).permit(:media, :price, :margin, :rate, :notes, :media_mag, :media_web, :management_number, :month_of_bill, :address_of_bill, :case_id)
+params.require(:order).permit(:media, :price, :margin, :rate, :notes, :media_mag, :media_web, :management_number, :month_of_bill, :address_of_bill, :case_id, :category)
 end
 
 end

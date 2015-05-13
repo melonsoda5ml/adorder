@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150511065927) do
+ActiveRecord::Schema.define(version: 20150513021734) do
 
   create_table "cases", force: true do |t|
     t.string   "name"
@@ -26,6 +26,19 @@ ActiveRecord::Schema.define(version: 20150511065927) do
   create_table "homes", force: true do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "magazine_orders", force: true do |t|
+    t.integer  "order_id"
+    t.integer  "issue"
+    t.date     "release_date"
+    t.string   "space"
+    t.boolean  "ad_form"
+    t.integer  "production_costs"
+    t.string   "production"
+    t.integer  "montgh_of_appropriation"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "media", force: true do |t|
@@ -48,6 +61,7 @@ ActiveRecord::Schema.define(version: 20150511065927) do
     t.integer  "month_of_bill"
     t.string   "address_of_bill"
     t.integer  "case_id"
+    t.integer  "category"
   end
 
   create_table "spaces", force: true do |t|
