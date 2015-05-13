@@ -2,9 +2,11 @@
 $(function(){
 $('#order_category').change(function() {
 	if ($('#order_category option:selected').val() == 0) 
-		$('#div_mag').css('display','table-row') && $('#div_web').css('display','none');
+		$('#div_mag').css('display','table-row') && $('#div_web').css('display','none') && $('#div_mail').css('display','none');
 	else if ($('#order_category option:selected').val() == 1) 
-		$('#div_web').css('display','table-row') && $('#div_mag').css('display','none');
+		$('#div_web').css('display','table-row') && $('#div_mag').css('display','none')&& $('#div_mail').css('display','none');
+	else if ($('#order_category option:selected').val() == 2) 
+		$('#div_mail').css('display','table-row') && $('#div_mag').css('display','none')&& $('#div_web').css('display','none');
 	 });
 });
 </script>
@@ -36,6 +38,13 @@ $('#order_category').change(function() {
 		</li>
 	</div>
 
+	<div id="div_mail" style="display: none;">
+		<li>
+			媒体名
+			<%= select :order, :media_web, Medium.where(:category=>2).map{|m| [m.name, m.shorten]} %>
+		</li>
+	</div>
+	
 	<li>
 		広告主  <%= text_field "case", :client %>
 	</li>
