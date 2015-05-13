@@ -11,10 +11,18 @@
 
   <tbody>
 	<tr>
-		<th>　</th>
+		<th>案件名</th>
 		<th>媒体</th>
 		<th>広告主</th>
 	</tr>
+
+	<% @cases.each do |c| %>
+	<tr>
+		<th><%= c.name %></th>
+		<th><%= c.orders.first.media %></th>
+		<th><%= c.agent %></th>
+	<tr>
+	<% end %>
   </tbody>
 
 </table>

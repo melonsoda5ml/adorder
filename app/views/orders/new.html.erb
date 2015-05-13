@@ -22,21 +22,21 @@ $('#order_type').change(function() {
 	<li>
 		状況 <%= select :case, :status, {"決定"=>0, "角度高め"=>1, "提案中"=>2} %>
 	</li>
-		
-	<div id="div_web" style="display: none;">
-		<li>
-			媒体名
-			<%= select :order, :media_web, Medium.where(:type=>1).map{|m| [m.name, m.symbol]} %>
-		</li>
-	</div>
-	
+
 	<div id ="div_mag">
 		<li>
 			媒体名
-			<%= select :order, :media_mag, Medium.where(:type=>0).map{|m| [m.name, m.symbol]} %>
+			<%= select :order, :media_mag, Medium.where(:category=>0).map{|m| [m.name, m.shorten]} %>
 		</li>
 	</div>
-		
+
+	<div id="div_web" style="display: none;">
+		<li>
+			媒体名
+			<%= select :order, :media_web, Medium.where(:category=>1).map{|m| [m.name, m.shorten]} %>
+		</li>
+	</div>
+
 	<li>
 		広告主  <%= text_field "case", :client %>
 	</li>

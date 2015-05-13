@@ -1,5 +1,4 @@
 require 'viewpoint'
-require 'csv'
 include Viewpoint::EWS
 
 class OrdersController < ApplicationController
@@ -7,8 +6,9 @@ class OrdersController < ApplicationController
   respond_to :html
 
   def index
-    @orders = Order.all
-    respond_with(@orders)
+	@cases = Case.all
+	@orders = Order.all
+	respond_with(@orders)
   end
 
   def show
@@ -32,26 +32,20 @@ class OrdersController < ApplicationController
 
  	@order = Order.new(order_params)
 	@order.case_id = @case.id
-	@order.save
+	@order.media = order_params[:media_mag]
 =begin
     	if @order.type == Order::MAGAZINE_SCHEME
     		@order.media = order_params[:media_mag]
-    		@order.release_date =  order_params[:release_date]
-    		@order.start_date = nil
-    		@order.end_date = nil
     	elsif @order.type == Order::WEB_SCHEME
     		@order.media = order_params[:media_web]
-    		@order.release_date =  nil
-    		@order.start_date = order_params[:start_date]
-    		@order.end_date = order_params[:end_date]
     	end
-    	ap @order
+=end
+    	pp @order
    	@order.save
 	if params[:mail][:send] == "1"
 		#Mailer.sendmail(@order).deliver
 		sendmail(@order)
 	end
-=end
 	redirect_to orders_path
 	flash[:success] = "オーダーを登録しました"
   end
@@ -93,11 +87,11 @@ end
 private
 
 def case_params
-	params.require(:case).permit(:name, :client, :agent, :pic_id, :status)
+params.require(:case).permit(:name, :client, :agent, :pic_id, :status)
 end
 
 def order_params
-	params.require(:order).permit(:media, :price, :margin, :rate, :notes, :media_mag, :media_web, :management_number, :month_of_bill, :address_of_bill, :case_id)
+params.require(:order).permit(:media, :price, :margin, :rate, :notes, :media_mag, :media_web, :management_number, :month_of_bill, :address_of_bill, :case_id)
 end
 
 end
