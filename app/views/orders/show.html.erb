@@ -16,6 +16,14 @@
 	
 	<% if @order.category == Order::MAGAZINE_SCHEME %>
 		<li>発売日:<%= @mag.release_date %></li>
+		<li>スペース:<%= @mag.space %></li>
+		<% if @mag.ad_form == 0 %>
+			<li>純広告</li>
+		<% else %>
+			<li>タイアップ</li>
+		<% end %>
+		<li>制作会社:<%= @mag.production %></li>
+		<li>制作費:<%= @mag.production_costs %></li>
 	<% elsif @order.category == Order::WEB_SCHEME %>
 	<% end %>
 	

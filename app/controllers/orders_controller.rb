@@ -95,11 +95,14 @@ params.require(:case).permit(:name, :client, :agent, :pic_id, :status)
 end
 
 def order_params
-params.require(:order).permit(:media, :price, :margin, :rate, :notes, :media_mag, :media_web, :management_number, :month_of_bill, :address_of_bill, :case_id, :category)
+	params.require(:order).permit(:media, :price, :margin, :rate, :notes, :media_mag, :media_web, :management_number, :month_of_bill, :address_of_bill, :case_id, :category)
 end
 
 def mag_params
-params.require(:magazine_order).permit(:order_id, :issue, :release_date, :space, :ad_form, :production_costs, :production, :montgh_of_appropriation)
+	params.require(:magazine_order).permit(:order_id, :issue, :release_date, :space, :ad_form, :production_costs, :production, :montgh_of_appropriation)
 end
 
+def mail_params
+	params.require(:magazine_order).permit(:order_id, :send_date, :space)
+end
 end

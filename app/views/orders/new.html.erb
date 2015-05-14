@@ -3,8 +3,8 @@ $(function(){
 $('#order_category').change(function() {
 	if ($('#order_category option:selected').val() == 0) 
 		$('#div_mag').css('display','table-row') && $('#div_web').css('display','none') && $('#div_mail').css('display','none');
-	else if ($('#order_category option:selected').val() == 1) 
-		$('#div_web').css('display','table-row') && $('#div_mag').css('display','none')&& $('#div_mail').css('display','none');
+	//else if ($('#order_category option:selected').val() == 1) 
+		//$('#div_web').css('display','table-row') && $('#div_mag').css('display','none')&& $('#div_mail').css('display','none');
 	else if ($('#order_category option:selected').val() == 2) 
 		$('#div_mail').css('display','table-row') && $('#div_mag').css('display','none')&& $('#div_web').css('display','none');
 	 });
@@ -15,7 +15,7 @@ $('#order_category').change(function() {
 <%= form_tag :action => :create do %>
 <ul style="list-style:none;">
 	<li>
-		<%= select :order, :category, {"雑誌"=>0, "Web"=>1, "メール"=>2} %>
+		<%= select :order, :category, {"雑誌"=>0, "Web（動きません）"=>1, "メール"=>2} %>
 	</li>
 	<li>
 		案件名 <%= text_field "case", :name %>
@@ -34,7 +34,8 @@ $('#order_category').change(function() {
 			<%= date_field("magazine_order", "release_date")%>
 		</li>
 		<li>
-			スペース <%= text_field "magazine_order", :space %>
+			スペース 
+			<%= select :mail_order, :space, Space.where(:category=>0).map{|s| [s.name,s.id]} %>
 		</li>
 		<li>
 			 純広告 or タイアップ <%= select :magazine_order, :ad_form,  {"純広告"=>true, "タイアップ"=>false} %>
@@ -58,6 +59,14 @@ $('#order_category').change(function() {
 		<li>
 			媒体名
 			<%= select :order, :media_web, Medium.where(:category=>2).map{|m| [m.name, m.shorten]} %>
+		</li>
+		<li>
+			配信日
+			<%= date_field("mail_order", "send_date")%>
+		</li>
+		<li>
+			スペース 
+			<%= select :mail_order, :space, Space.where(:category=>2).map{|s| [s.name,s.id]} %>
 		</li>
 	</div>
 	

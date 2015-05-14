@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150513021734) do
+ActiveRecord::Schema.define(version: 20150514064432) do
 
   create_table "cases", force: true do |t|
     t.string   "name"
@@ -41,6 +41,14 @@ ActiveRecord::Schema.define(version: 20150513021734) do
     t.datetime "updated_at",              null: false
   end
 
+  create_table "mail_orders", force: true do |t|
+    t.integer  "order_id"
+    t.date     "send_date"
+    t.string   "space"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "media", force: true do |t|
     t.integer  "category"
     t.string   "shorten"
@@ -65,7 +73,7 @@ ActiveRecord::Schema.define(version: 20150513021734) do
   end
 
   create_table "spaces", force: true do |t|
-    t.integer  "type"
+    t.integer  "category"
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
