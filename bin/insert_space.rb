@@ -5,7 +5,7 @@ require "active_record"
 
 Space.destroy_all
 
-CSV.foreach("../nikkeibp_space.csv", 'r:UTF-8') do |row|
+CSV.foreach("../space.csv", 'r:UTF-8') do |row|
 	s = Space.create(
 		:category => row[0],
 		:name => row[1]

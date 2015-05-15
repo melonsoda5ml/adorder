@@ -22,7 +22,7 @@
 		<td><%= link_to '詳細', Order.find_by_case_id(c.id) %></td>
 		<th><%= c.name %></th>
 		<th><%= c.orders.first.media %></th>
-		<th><%= c.agent %></th>
+		<th><%= c.client %></th>
 	<tr>
 	<% end %>
   </tbody>

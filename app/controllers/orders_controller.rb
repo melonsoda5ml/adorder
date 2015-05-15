@@ -15,6 +15,8 @@ class OrdersController < ApplicationController
   	@order = Order.find(params[:id])
 	@case = Case.find(@order.case_id)
 	@mag = MagazineOrder.find_by_order_id(@order.id)
+	@media_type = mediatype(@order)
+	@case_status = casestatus(@case)
 	respond_with(@order)
   end
 
@@ -24,6 +26,7 @@ class OrdersController < ApplicationController
 
   def edit
 		@order = Order.find(params[:id])
+		@case = Case.find(@order.case_id)
 		respond_with(@order)
   end
 
@@ -43,9 +46,16 @@ class OrdersController < ApplicationController
     		pp @mag
     	elsif  @order.category == Order::WEB_SCHEME
     		@order.media = order_params[:media_web]
+    	elsif  @order.category == Order::MAIL_SCHEME
+    		@order.media = order_params[:media_mail]
+    		@mail = MailOrder.new(mail_params)
+    		@mail.order_id = @order.id
+    		@mail.save
+    		pp @mail
     	end
-    	pp @order
    	@order.save
+   	pp @order
+   	    	
 	if params[:mail][:send] == "1"
 		#Mailer.sendmail(@order).deliver
 		sendmail(@order)
@@ -56,7 +66,12 @@ class OrdersController < ApplicationController
 
   def update
 	@order = Order.find(params[:id])
+	@case = Case.find(@order.case_id)
+	
+	@media_type = mediatype(@order)
+	
 	@order.update(order_params)
+	@case.update(case_params)
 	if params[:mail][:send] == "1"
 		#Mailer.sendmail(@order).deliver
 		sendmail(@order)
@@ -66,10 +81,36 @@ class OrdersController < ApplicationController
   end
 
 def destroy
-	puts "ですとろい！！！"
 	Order.find(params[:id]).destroy
 	flash[:success] = "オーダーを削除しました"
 	redirect_to orders_path
+end
+
+private
+def casestatus(c)
+	@case = c
+	@case_status = nil
+	if @case.status == Case::OK_SCHEME
+		@case_status = "決定"
+	elsif @case.status == Case::ALMOST_SCHEME
+		@case_status = "角度高め"
+	elsif @case.status == Case::PROPOSING_SCHEME
+		@case_status = "提案中"
+	end
+	return @case_status
+end
+
+def mediatype(order)
+	@order = order
+	@media_type = nil
+	if@order.category == Order::MAGAZINE_SCHEME
+		@media_type = "雑誌広告"
+	elsif @order.category == Order::WEB_SCHEME
+		@media_type = "インターネット広告"
+	elsif @order.category == Order::MAIL_SCHEME
+		@media_type = "メール広告"
+	end
+	return @media_type
 end
 
 def sendmail(order)
@@ -88,14 +129,12 @@ def sendmail(order)
 	end
 end
 
-private
-
 def case_params
 params.require(:case).permit(:name, :client, :agent, :pic_id, :status)
 end
 
 def order_params
-	params.require(:order).permit(:media, :price, :margin, :rate, :notes, :media_mag, :media_web, :management_number, :month_of_bill, :address_of_bill, :case_id, :category)
+	params.require(:order).permit(:media, :price, :margin, :rate, :notes, :media_mag, :media_web, :media_mail, :management_number, :month_of_bill, :address_of_bill, :case_id, :category)
 end
 
 def mag_params

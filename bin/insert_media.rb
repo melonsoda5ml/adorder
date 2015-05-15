@@ -3,9 +3,9 @@ require "rubygems"
 require 'csv'
 require "active_record"
 
-#Medium.destroy_all
+Medium.destroy_all
 
-CSV.foreach("***.csv", 'r:UTF-8') do |row|
+CSV.foreach("../media.csv", 'r:UTF-8') do |row|
 	m = Medium.create(
 		:category => row[0],
 		:shorten => row[1],

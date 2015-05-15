@@ -3,16 +3,12 @@
 <h1>オーダー情報</h1>
 
 <%= @order.created_at.strftime("%Y年%m月%d日") %>に登録された
-<% if @order.category == Order::MAGAZINE_SCHEME %>
-	<%= "雑誌広告" %>
-<% elsif @order.category == Order::WEB_SCHEME %>
-	<%= "インターネット広告" %>
-<% end %>
+<%= @media_type %>
 のオーダーです。
 
 <ul style="list-style:none;">
-	<li>状況:<%= @case.status %><li>
-	<li>媒体:<%= Medium.find_by_shorten(@order.media).name %></li>
+	<li>状況:<%= @case_status %><li>
+	<li>媒体:<%= @order.media %></li>
 	
 	<% if @order.category == Order::MAGAZINE_SCHEME %>
 		<li>発売日:<%= @mag.release_date %></li>
@@ -22,8 +18,10 @@
 		<% else %>
 			<li>タイアップ</li>
 		<% end %>
+		<li>スペース:<%= @mag.space %></li>
 		<li>制作会社:<%= @mag.production %></li>
 		<li>制作費:<%= @mag.production_costs %></li>
+		
 	<% elsif @order.category == Order::WEB_SCHEME %>
 	<% end %>
 	
@@ -31,7 +29,6 @@
 	<li>広告主:<%= @case.client %></li>
 	<li>広告会社:<%= @case.agent %></li>
 	<li>マージン:<%= @order.margin %></li>
-	<li>スペース:<%= @mag.space %></li>
 	<li>備考:<%= @order.notes %></li>
 </ul>
 

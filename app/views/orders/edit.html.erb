@@ -3,26 +3,22 @@
 <%= form_for(@order, :url=>{:action => 'update'}, :html=>{:method =>:put}) do %>
 <ul style="list-style:none;">
 	<li>
-		状況 <%= select :order, :status, {"決定"=>0, "角度高め"=>1, "提案中"=>2} %>
+		状況 <%= select :case, :status, {"決定"=>0, "角度高め"=>1, "提案中"=>2} %>
 	</li>
 	
-	<% if @order.type == 0 %>	
+	<% if @order.category == 0 %>	
 		<li>
 			媒体名
-			<%= select :order, :media_mag, Medium.where(:type=>0).map{|m| [m.name, m.symbol]} %>
+			<%= select :order, :media_mag, Medium.where(:category=>0).map{|m| [m.name, m.shorten]} %>
 		</li>
 		<li>
-			発売日
-			<%= date_field("order", "release_date")%>
+			掲載号発売日
+			<%= date_field("magazine_order", "release_date")%>
 		</li>
-		<li>
-			掲載誌送付先 <%= text_field "order", :sample %>
-		</li>
-	<% elsif @order.type == 1 %>
+	<% elsif @order.category  == 1 %>
 		<li>
 			媒体名
-			<%= select :order, :media_web, Medium.where(:type=>1).map{|m| [m.name, m.symbol]} %>
-		</li>
+			<%= select :order, :media_mag, Medium.where(:category=>0).map{|m| [m.name, m.shorten]} %>		</li>
 		<li>
 			掲載期間:
 			<%= date_field("order", "start_date")%> - <%= date_field("order", "end_date")%>
@@ -30,13 +26,10 @@
 	<% end %>
 	
 	<li>
-		広告主  <%= text_field "order", :client %>
+		広告主  <%= text_field "case", :client %>
 	</li>
 	<li>
-		広告会社 <%= text_field "order", :agent %>
-	</li>
-	<li>
-		スペース <%= text_field "order", :space %>
+		広告会社 <%= text_field "case", :agent %>
 	</li>
 	<li>
 		料金 <%= text_field "order", :price %>万円
@@ -48,17 +41,12 @@
 		レート <%= select :order, :rate, {"1回"=>1, "3回"=>3} %>
 	</li>
 	<li>
-		請求先 <%= text_field "order", :account %>
-	</li>
-	<li>
-		制作会社 <%= text_field "order", :production %>
+		請求先 <%= text_field "order", :address_of_bill %>
 	</li>
 	<li>
 		備考 <%= text_field "order", :notes %>
 	</li>
-	<li>
-		担当者 <%= text_field "order", :person_in_charge %>
-	</li>	
+
 	<% if current_user.role == 0 %>
 	<% elsif current_user.role == 1 %>
 	<% elsif current_user.role == 2 %>

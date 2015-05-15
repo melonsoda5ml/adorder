@@ -9,7 +9,12 @@ $('#order_category').change(function() {
 		$('#div_mail').css('display','table-row') && $('#div_mag').css('display','none')&& $('#div_web').css('display','none');
 	 });
 });
+
+function onButtonClick() {
+	$('#div_space').css('display','table');
+}
 </script>
+<br />
 <h1>新規オーダー情報</h1>
 
 <%= form_tag :action => :create do %>
@@ -35,7 +40,11 @@ $('#order_category').change(function() {
 		</li>
 		<li>
 			スペース 
-			<%= select :mail_order, :space, Space.where(:category=>0).map{|s| [s.name,s.id]} %>
+			<%= select :mail_order, :space, Space.where(:category=>0).map{|s| [s.name]} %>
+			 <input type="checkbox" onClick="onButtonClick()">
+			 <div id = "div_space" style="display: none;" align="left">
+				 <%= text_field "order", :price %>
+			 </div>
 		</li>
 		<li>
 			 純広告 or タイアップ <%= select :magazine_order, :ad_form,  {"純広告"=>true, "タイアップ"=>false} %>
@@ -58,7 +67,7 @@ $('#order_category').change(function() {
 	<div id="div_mail" style="display: none;">
 		<li>
 			媒体名
-			<%= select :order, :media_web, Medium.where(:category=>2).map{|m| [m.name, m.shorten]} %>
+			<%= select :order, :media_mail, Medium.where(:category=>2).map{|m| [m.name, m.shorten]} %>
 		</li>
 		<li>
 			配信日
@@ -66,7 +75,7 @@ $('#order_category').change(function() {
 		</li>
 		<li>
 			スペース 
-			<%= select :mail_order, :space, Space.where(:category=>2).map{|s| [s.name,s.id]} %>
+			<%= select :mail_order, :space, Space.where(:category=>2).map{|s| [s.name]} %>
 		</li>
 	</div>
 	
