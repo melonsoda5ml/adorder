@@ -13,17 +13,21 @@
 	<tr>
 		<th>　</th>
 		<th>案件名</th>
-		<th>媒体</th>
+		<th>掲載媒体</th>
 		<th>広告主</th>
+		<th>広告会社</th>
 	</tr>
 
 	<% @cases.each do |c| %>
-	<tr>
-		<td><%= link_to '詳細', Order.find_by_case_id(c.id) %></td>
-		<th><%= c.name %></th>
-		<th><%= c.orders.first.media %></th>
-		<th><%= c.client %></th>
-	<tr>
+		<% @orders.each do |o| %>
+			<tr>
+			<td><%= link_to '詳細', o %></td>
+			<th><%= c.name %></th>
+			<th><%= o.media%></th>
+			<th><%= c.client %></th>
+			<th><%= c.agent %></th>
+			<tr>
+		<% end %>
 	<% end %>
   </tbody>
 

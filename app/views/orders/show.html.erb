@@ -12,23 +12,25 @@
 	
 	<% if @order.category == Order::MAGAZINE_SCHEME %>
 		<li>発売日:<%= @mag.release_date %></li>
-		<li>スペース:<%= @mag.space %></li>
-		<% if @mag.ad_form == 0 %>
-			<li>純広告</li>
+		<li>スペース:<%= @mag.space %>
+		<% if @mag.ad_form == true %>
+			※純広告</li>
 		<% else %>
-			<li>タイアップ</li>
+			※タイアップ</li>
 		<% end %>
-		<li>スペース:<%= @mag.space %></li>
 		<li>制作会社:<%= @mag.production %></li>
 		<li>制作費:<%= @mag.production_costs %></li>
 		
 	<% elsif @order.category == Order::WEB_SCHEME %>
+	<% elsif @order.category == Order::MAIL_SCHEME %>
+		<li>配信日:<%= @mail.send_date %></li>
+		<li>スペース:<%= @mail.space %></li>
 	<% end %>
 	
 	<li>金額:<%= @order.price %>万円</li>
 	<li>広告主:<%= @case.client %></li>
 	<li>広告会社:<%= @case.agent %></li>
-	<li>マージン:<%= @order.margin %></li>
+	<li>マージン:<%= @order.margin %>%</li>
 	<li>備考:<%= @order.notes %></li>
 </ul>
 

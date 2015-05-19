@@ -14,8 +14,13 @@ class OrdersController < ApplicationController
   def show
   	@order = Order.find(params[:id])
 	@case = Case.find(@order.case_id)
-	@mag = MagazineOrder.find_by_order_id(@order.id)
+	#@mag = MagazineOrder.find_by_order_id(@order.id)
 	@media_type = mediatype(@order)
+	if @order.category == Order::MAGAZINE_SCHEME
+		@mag = @order.magazine_orders.first
+	elsif @order.category == Order::MAIL_SCHEME
+		@mail = @order.mail_orders.first
+	end
 	@case_status = casestatus(@case)
 	respond_with(@order)
   end
@@ -38,27 +43,10 @@ class OrdersController < ApplicationController
  	@order = Order.new(order_params)
 	@order.case_id = @case.id
 	@order.save
-    	if @order.category == Order::MAGAZINE_SCHEME
-    		@order.media = order_params[:media_mag] 
-    		@mag = MagazineOrder.new(mag_params)
-    		@mag.order_id = @order.id
-    		@mag.save
-    		pp @mag
-    	elsif  @order.category == Order::WEB_SCHEME
-    		@order.media = order_params[:media_web]
-    	elsif  @order.category == Order::MAIL_SCHEME
-    		@order.media = order_params[:media_mail]
-    		@mail = MailOrder.new(mail_params)
-    		@mail.order_id = @order.id
-    		@mail.save
-    		pp @mail
-    	end
-   	@order.save
-   	pp @order
+	@media = createmedia(@order)
    	    	
 	if params[:mail][:send] == "1"
-		#Mailer.sendmail(@order).deliver
-		sendmail(@order)
+		sendmail(@case,@order,@media)
 	end
 	redirect_to orders_path
 	flash[:success] = "オーダーを登録しました"
@@ -72,9 +60,10 @@ class OrdersController < ApplicationController
 	
 	@order.update(order_params)
 	@case.update(case_params)
+	@media = updatemedia(@order)
 	if params[:mail][:send] == "1"
 		#Mailer.sendmail(@order).deliver
-		sendmail(@order)
+		sendmail(@case,@order,@media)
 	end
 	redirect_to orders_path
 	flash[:success] = "オーダーを編集しました"
@@ -113,19 +102,65 @@ def mediatype(order)
 	return @media_type
 end
 
-def sendmail(order)
+def createmedia(order)
 	@order = order
-	endpoint = 'https://outlook.office365.com/ews/Exch' #Office365
-	user = 'ユーザー名'
-	pass = 'パスワード'
-	t = render_to_string('sendmail.text.erb', collection: [@order]).to_str
+    	if @order.category == Order::MAGAZINE_SCHEME
+    		@order.media = order_params[:media_mag] 
+    		@order.save
+    		@mag = MagazineOrder.new(mag_params)
+    		@mag.order_id = @order.id
+    		@mag.save
+    		pp @mag
+    		return @mag
+    	elsif  @order.category == Order::WEB_SCHEME
+    		@order.media = order_params[:media_web]
+    	elsif  @order.category == Order::MAIL_SCHEME
+    		@order.media = order_params[:media_mail]
+    		@order.save
+    		@mail = MailOrder.new(mail_params)
+    		@mail.order_id = @order.id
+    		@mail.save
+    		pp @mail
+    		return @mail
+    	end
+end
+
+def updatemedia(order)
+	@order = order
+    	if @order.category == Order::MAGAZINE_SCHEME
+    		@order.media = order_params[:media_mag] 
+    		@order.save
+    		@mag = MagazineOrder.find_by_order_id(@order.id)
+     		@mag.order_id = @order.id
+    		@mag.update(mag_params)
+    		return @mag
+    	elsif  @order.category == Order::WEB_SCHEME
+    		@order.media = order_params[:media_web]
+    	elsif  @order.category == Order::MAIL_SCHEME
+    		@order.media = order_params[:media_mail]
+		@order.save
+    		@mail = MailOrder.find_by_order_id(@order.id)
+    		@mail.order_id = @order.id
+    		@mail.update(mail_params)
+    		return @mail
+    	end
+end
+
+def sendmail(c,o,m)
+	@case = c
+	@order = o
+	@media = m
+	endpoint = '' 
+	user = ''
+	pass = ''
+	t = render_to_string('mail.text.erb', collection: [@case, @order, @media]).to_str
 	cli = Viewpoint::EWSClient.new endpoint, user, pass
-	date_ja =  @order.release_date.strftime("%Y/%m/%d(#{%w(日 月 火 水 木 金 土)[@order.release_date.wday]})")
 
 	cli.send_message do |m|
-		m.subject = "【申込み】"+@order.media
+		m.subject = "【申込み】"+ Medium.find_by_shorten(@order.media).name+":"+@case.client
 		m.body = t
-		m.to_recipients << '申込先Eメールアドレス'
+		m.to_recipients << ''
+		m.cc_recipients << current_user.email
 	end
 end
 
@@ -142,6 +177,6 @@ def mag_params
 end
 
 def mail_params
-	params.require(:magazine_order).permit(:order_id, :send_date, :space)
+	params.require(:mail_order).permit(:send_date, :space)
 end
 end

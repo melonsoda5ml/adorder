@@ -40,7 +40,7 @@ function onButtonClick() {
 		</li>
 		<li>
 			スペース 
-			<%= select :mail_order, :space, Space.where(:category=>0).map{|s| [s.name]} %>
+			<%= select :magazine_order, :space, Space.where(:category=>0).map{|s| [s.name]} %>
 			 <input type="checkbox" onClick="onButtonClick()">
 			 <div id = "div_space" style="display: none;" align="left">
 				 <%= text_field "order", :price %>

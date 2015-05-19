@@ -6,7 +6,7 @@
 		状況 <%= select :case, :status, {"決定"=>0, "角度高め"=>1, "提案中"=>2} %>
 	</li>
 	
-	<% if @order.category == 0 %>	
+	<% if @order.category == Order::MAGAZINE_SCHEME %>	
 		<li>
 			媒体名
 			<%= select :order, :media_mag, Medium.where(:category=>0).map{|m| [m.name, m.shorten]} %>
@@ -15,7 +15,7 @@
 			掲載号発売日
 			<%= date_field("magazine_order", "release_date")%>
 		</li>
-	<% elsif @order.category  == 1 %>
+	<% elsif @order.category == Order::WEB_SCHEME %>
 		<li>
 			媒体名
 			<%= select :order, :media_mag, Medium.where(:category=>0).map{|m| [m.name, m.shorten]} %>		</li>
@@ -23,6 +23,20 @@
 			掲載期間:
 			<%= date_field("order", "start_date")%> - <%= date_field("order", "end_date")%>
 		</li>
+	<% elsif @order.category == Order::MAIL_SCHEME %>
+		<li>
+			媒体名
+			<%= select :order, :media_mail, Medium.where(:category=>2).map{|m| [m.name, m.shorten]} %>
+		</li>
+		<li>
+			配信日
+			<%= date_field("mail_order", "send_date")%>
+		</li>
+		<li>
+			スペース 
+			<%= select :mail_order, :space, Space.where(:category=>2).map{|s| [s.name]} %>
+		</li>
+
 	<% end %>
 	
 	<li>

@@ -1,0 +1,41 @@
+※本メールは、広告オーダーシステムからの自動送信メールです。
+
+
+ご担当者様
+
+お疲れ様です。
+下記申込がございましたので、ご確認ください。
+よろしくお願いいたします。
+
+【記入日時】<%= @case.created_at.strftime("%Y/%m/%d(#{%w(日 月 火 水 木 金 土)[@case.created_at.wday]})") %>
+***********************************************************
+
+【広告掲載申込情報】
+---------------------------------------------------------------------
+
+【案件名】<%= @case.name %>
+【広告主】<%= @case.client %>
+【広告会社】<%= @case.agent %>
+【掲載媒体】<%= @order.media %>
+【申込金額】<%= @order.price %>万円
+【金額レート】<%= @order.rate %>回レート
+【マージン】<%= @order.margin %>%
+
+<% if @order.category == Order::MAGAZINE_SCHEME %>
+<% if @media.ad_form == true %>
+【発売日】<%= @media.release_date %>
+【スペース】<%= @media.space %>
+<% end %>
+<% elsif @order.category == Order::WEB_SCHEME %>
+<% elsif @order.category == Order::MAIL_SCHEME %>
+【配信日】<%= @media.send_date %>
+【スペース】<%= @media.space %>
+<% end %>
+
+【請求月】<%= @order.month_of_bill %>
+【請求書送付先】<%= @order.address_of_bill %>
+
+【管理番号】<%= @order.management_number %>
+【備考】<%= @order.notes %>
+---------------------------------------------------------------------
+***********************************************************
