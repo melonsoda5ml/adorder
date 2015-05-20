@@ -6,8 +6,7 @@ class OrdersController < ApplicationController
   respond_to :html
 
   def index
-	@cases = Case.all
-	@orders = Order.all
+	@cases = Case.where(pic_id: current_user.id)
 	respond_with(@orders)
   end
 
@@ -70,7 +69,10 @@ class OrdersController < ApplicationController
   end
 
 def destroy
-	Order.find(params[:id]).destroy
+	o = Order.find(params[:id])
+	c = Case.find(o.case_id)
+	c.destroy
+	o.destroy
 	flash[:success] = "オーダーを削除しました"
 	redirect_to orders_path
 end
@@ -150,9 +152,7 @@ def sendmail(c,o,m)
 	@case = c
 	@order = o
 	@media = m
-	endpoint = '' 
-	user = ''
-	pass = ''
+
 	t = render_to_string('mail.text.erb', collection: [@case, @order, @media]).to_str
 	cli = Viewpoint::EWSClient.new endpoint, user, pass
 

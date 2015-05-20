@@ -19,11 +19,12 @@
 	</tr>
 
 	<% @cases.each do |c| %>
-		<% @orders.each do |o| %>
+		<% orders = Order.where(case_id: c.id) %>
+			<% orders.each do |o| %>
 			<tr>
 			<td><%= link_to '詳細', o %></td>
 			<th><%= c.name %></th>
-			<th><%= o.media%></th>
+			<th><%= o.media %></th>
 			<th><%= c.client %></th>
 			<th><%= c.agent %></th>
 			<tr>
